@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 export async function GetLogin(req: Request, res: Response) {
   try {

@@ -1,5 +1,5 @@
+import type { Router } from 'express';
 import glob from 'glob';
-import { Router } from 'express';
 import { cfg } from 'src/env';
 
 /** the default property comes from the export default convention */

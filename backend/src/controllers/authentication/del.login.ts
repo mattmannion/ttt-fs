@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 export async function Logout(req: Request, res: Response) {
   try {
