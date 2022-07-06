@@ -1,26 +1,42 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-const env = process.env;
-// env check
+const { env } = process;
+
 export const prod: boolean = env.NODE_ENV === 'prod' ? true : false;
+
 console.log(prod ? 'prod' : 'dev');
 
-// ports and paths
-export const path: string = prod ? env.LOCATION! : 'http://localhost:';
-export const port: number = prod ? +env.PORT! : 7890;
-
-// redis
-export const redis = {
-  port: prod ? +env.REDIS_PORT! : 6379,
-  host: prod ? env.REDIS_HOST! : 'localhost',
-  password: prod ? env.REDIS_PW! : undefined,
+export const cfg = {
+  rootdir: __dirname,
+  server: {
+    port: env.PORT ? +env.PORT : 7890,
+    path: prod ? env.LOCATION! : 'http://localhost:',
+  },
+  redis: {
+    host: prod ? env.REDIS_HOST! : 'localhost',
+    port: prod ? +env.REDIS_PORT! : 6379,
+    password: prod ? env.REDIS_PW! : undefined,
+    get url(): string {
+      return `redis://${this.host}:${this.port}`;
+    },
+  },
   session: {
     name: env.SESSION_NAME!,
-    age: +env.SESSION_AGE!,
+    age: Number(env.SESSION_AGE!),
     secret: env.SESSION_SECRET!,
+  },
+  cors: {
+    prodlist: new Set([env.WL_1!, env.WL_2!]),
+    devlist: new Set([
+      'http://localhost:3000',
+      'http://localhost:7890',
+      undefined,
+    ]),
+    whitelist() {
+      return prod ? this.prodlist : this.devlist;
+    },
   },
 };
 
-// db
 export const pg: PostgresConnectionOptions = {
   host: prod ? env.TYPEORM_HOST! : 'localhost',
   database: prod ? env.TYPEORM_DATABASE! : 'ttt',
@@ -35,12 +51,3 @@ export const pg: PostgresConnectionOptions = {
     : true,
   logging: prod ? (env.TYPEORM_LOGGING! === 'true' ? true : false) : true,
 };
-
-// cors
-const prodlist = new Set([env.WL_1!, env.WL_2!]);
-const devlist = new Set([
-  'http://localhost:3000',
-  'http://localhost:7890',
-  undefined,
-]);
-export const whitelist = prod ? prodlist : devlist;

@@ -1,16 +1,21 @@
 import { Request, Response } from 'express';
-import { dbq } from 'src/db/psql.db';
+import { dbq } from 'src/db/db';
 import { login_query } from 'src/db/sql/authentication.sql';
+import type { Users } from 'src/models/Users';
 
 export async function PostLogin(req: Request, res: Response) {
   try {
     const { username, password }: { username: string; password: string } =
       req.body;
 
-    const data = await dbq(login_query, [username, password], 0);
+    const user = await dbq<Users>({
+      query_string: login_query,
+      query_params: [username, password],
+      query_rows: 'one',
+    });
 
-    if (data) {
-      req.session.username = data.username;
+    if (user) {
+      req.session.username = user.username;
 
       res.status(200).json({
         username,
