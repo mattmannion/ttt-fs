@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
+import type { Users } from 'src/models/Users';
 import { dbq } from 'src/db/db';
 import { login_query } from 'src/db/sql/authentication.sql';
-import type { Users } from 'src/models/Users';
 
 export async function PostLogin(req: Request, res: Response) {
   try {
