@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
-import { logger } from 'src/util/util';
 
 export async function GetLogin(req: Request, res: Response) {
-  logger(req);
-
   try {
     const { session } = req;
     const logged_in =

@@ -1,11 +1,8 @@
 import { Request, Response } from 'express';
 import { dbq } from 'src/db/psql.db';
 import { login_query } from 'src/db/sql/authentication.sql';
-import { logger } from 'src/util/util';
 
 export async function PostLogin(req: Request, res: Response) {
-  logger(req);
-
   try {
     const { username, password }: { username: string; password: string } =
       req.body;

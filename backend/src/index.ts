@@ -7,6 +7,7 @@ import cors from 'src/middleware/cors';
 import session from 'src/middleware/redis-session';
 import router from 'src/routes/router';
 import TypeOrmInit from 'src/db/typeorm.db';
+import { ep_log } from 'src/middleware/logger';
 
 // this app will only be used for main server
 // configuration, including initial middleware.
@@ -24,6 +25,8 @@ app.options('*', cors);
 app.use(cors);
 
 app.use(json());
+
+app.use(ep_log);
 
 // server router
 app.use(...router);

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { dbq } from 'src/db/psql.db';
 import { get_users_query } from 'src/db/sql/users.sql';
-import { logger } from 'src/util/util';
 
 interface GetUsersResponseIF {
   id: number;
@@ -13,7 +12,6 @@ interface GetUsersResponseIF {
 }
 
 export async function GetUsers(req: Request, res: Response) {
-  logger(req);
   try {
     const users = (await dbq(get_users_query, [], 1)) as GetUsersResponseIF[];
 

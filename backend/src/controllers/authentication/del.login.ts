@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
-import { logger } from 'src/util/util';
 
 export async function Logout(req: Request, res: Response) {
-  logger(req);
-
   try {
     let { session } = req;
 
