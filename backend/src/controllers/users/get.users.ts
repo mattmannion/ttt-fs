@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { dbq } from 'src/db/psql.db';
+import { dbq } from 'src/db/db';
 import { get_users_query } from 'src/db/sql/users.sql';
 
 interface GetUsersResponseIF {

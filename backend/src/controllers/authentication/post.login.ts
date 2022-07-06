@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { dbq } from 'src/db/psql.db';
+import { dbq } from 'src/db/db';
 import { login_query } from 'src/db/sql/authentication.sql';
 
 export async function PostLogin(req: Request, res: Response) {

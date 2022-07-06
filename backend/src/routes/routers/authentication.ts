@@ -3,8 +3,8 @@ import { Logout } from 'src/controllers/authentication/del.login';
 import { GetLogin } from 'src/controllers/authentication/get.login';
 import { PostLogin } from 'src/controllers/authentication/post.login';
 
-const session = Router();
+const auth = Router();
 
-session.route('/login').get(GetLogin).post(PostLogin).delete(Logout);
+auth.route('/login').get(GetLogin).post(PostLogin).delete(Logout);
 
-export default session;
+export default auth;
