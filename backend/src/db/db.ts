@@ -1,11 +1,18 @@
 import { Pool } from 'pg';
+import { pg } from 'src/env';
 
-const db = new Pool({ idleTimeoutMillis: 100 });
+const db = new Pool({
+  idleTimeoutMillis: 100,
+  password: pg.password,
+  user: pg.username,
+  database: pg.database,
+  port: pg.port,
+});
 
 interface DatabaseQuery {
   query_string: string;
   query_params?: string[];
-  query_rows?: 'all' | 'one';
+  query_rows?: 'one' | 'all';
 }
 
 /**

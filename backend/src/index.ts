@@ -8,6 +8,7 @@ import { express_session } from 'src/middleware/redis.session';
 import { router } from 'src/routes/router';
 import TypeOrmInit from 'src/db/typeorm';
 import { ep_log } from 'src/middleware/logger';
+import { redis } from 'src/db/redis';
 // this app will only be used for main server
 // configuration, including initial middleware.
 const app = express();
@@ -33,6 +34,7 @@ app.use(ep_log);
     app.use(...(await router()));
 
     await TypeOrmInit();
+    await redis.connect().then(() => console.log('redis connected'));
 
     app.listen(cfg.server.port, () =>
       console.log('live @ ' + cfg.server.path + cfg.server.port)
