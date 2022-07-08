@@ -3,10 +3,16 @@ import type { Users } from 'src/models/Users';
 import { dbq } from 'src/db/db';
 import { login_query } from 'src/db/sql/authentication.sql';
 
-export async function PostLogin(req: Request, res: Response) {
+export async function PostLogin({ body, session }: Request, res: Response) {
   try {
-    const { username, password }: { username: string; password: string } =
-      req.body;
+    const { username, password } = body;
+
+    if (!username || !password) {
+      res.status(400).json({
+        msg: 'All fields must have values...',
+      });
+      return;
+    }
 
     const user = await dbq<Users>({
       query_string: login_query,
@@ -15,7 +21,7 @@ export async function PostLogin(req: Request, res: Response) {
     });
 
     if (user) {
-      req.session.username = user.username;
+      session.username = user.username;
 
       res.status(200).json({
         username,
