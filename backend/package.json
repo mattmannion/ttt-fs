@@ -26,7 +26,6 @@
     "pg": "^8.7.1",
     "redis": "^4.2.0",
     "reflect-metadata": "^0.1.13",
-    "ts-jest": "^28.0.5",
     "typeorm": "^0.2.38"
   },
   "devDependencies": {
