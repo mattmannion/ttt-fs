@@ -3,7 +3,7 @@ select id, username from users;
 `;
 
 export const get_user_query = `
-select username from users
+select * from users
 where id = $1;
 `;
 
@@ -38,4 +38,13 @@ returning username;
 export const delete_user_query = `
 delete from users where id = $1
 returning username;
+`;
+
+export const put_user_query = `
+update users
+set 
+firstname = $2,
+lastname = $3,
+password = $4
+where id = $1;
 `;
