@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+import { InternalError } from 'src/util/util';
 
 export async function GetLogin(req: Request, res: Response) {
   try {
@@ -12,6 +13,6 @@ export async function GetLogin(req: Request, res: Response) {
       status: logged_in,
     });
   } catch (error) {
-    console.log(error);
+    InternalError(error, res.status);
   }
 }

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Logout } from 'src/controllers/authentication/del.login';
+import { Logout } from 'src/controllers/authentication/delete.login';
 import { GetLogin } from 'src/controllers/authentication/get.login';
 import { PostLogin } from 'src/controllers/authentication/post.login';
 

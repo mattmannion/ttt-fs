@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 import type { Users } from 'src/models/Users';
 import { dbq } from 'src/db/db';
 import { get_user_query } from 'src/db/sql/users.sql';
+import { InternalError } from 'src/util/util';
 
 export async function GetUser(req: Request, res: Response) {
   try {
@@ -9,7 +10,6 @@ export async function GetUser(req: Request, res: Response) {
     const user = await dbq<Users>({
       query_string: get_user_query,
       query_params: [id],
-      query_rows: 'one',
     });
 
     res.status(200).json({
@@ -17,6 +17,6 @@ export async function GetUser(req: Request, res: Response) {
       status: 'success',
     });
   } catch (error) {
-    console.log(error);
+    InternalError(error, res.status);
   }
 }
