@@ -12,7 +12,6 @@ export async function PutUser({ body }: Request, res: Response) {
     let { firstname, lastname, username, email, password } = body;
 
     if (!username || !email) {
-      console.log('hello');
       res.status(400).json({
         msg: 'Must enter valid username and email',
       });
