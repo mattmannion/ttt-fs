@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+import { InternalError } from 'src/util/util';
 
 export async function GetProfile(req: Request, res: Response) {
   try {
@@ -9,6 +10,6 @@ export async function GetProfile(req: Request, res: Response) {
       status: 'success',
     });
   } catch (error) {
-    console.log(error);
+    InternalError(error, res.status);
   }
 }

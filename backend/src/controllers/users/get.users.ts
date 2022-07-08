@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import type { Users } from 'src/models/Users';
+import { InternalError } from 'src/util/util';
 import { dbq } from 'src/db/db';
 import { get_users_query } from 'src/db/sql/users.sql';
 
@@ -15,6 +16,6 @@ export async function GetUsers(_req: Request, res: Response) {
       status: 'success',
     });
   } catch (error) {
-    console.log(error);
+    InternalError(error, res.status);
   }
 }

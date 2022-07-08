@@ -9,15 +9,16 @@ import { DeleteUser } from 'src/controllers/users/delete.user';
 
 const users = Router();
 
+users.route('/users/:id').get(GetUser);
+
+users.route('/users').get(GetUsers).post(PostUser);
+
 users
+  .use(auth_check)
   .route('/users')
-  .get(GetUsers)
-  .post(PostUser)
   .put(PutUser)
   .patch(PutUser)
   .delete(DeleteUser);
-
-users.route('/users/:id').get(GetUser);
 
 users.use(auth_check).route('/profile').get(GetProfile);
 

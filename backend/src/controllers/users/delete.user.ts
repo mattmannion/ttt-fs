@@ -1,17 +1,19 @@
 import type { Request, Response } from 'express';
 import type { Users } from 'src/models/Users';
+import { InternalError } from 'src/util/util';
 import { dbq } from 'src/db/db';
 import {
   check_username_and_email_query,
   delete_user_query,
 } from 'src/db/sql/users.sql';
 
-export async function DeleteUser({ body }: Request, res: Response) {
+export async function DeleteUser({ body, session }: Request, res: Response) {
   try {
-    let { username, email } = body;
+    let { email } = body;
+    const { username } = session;
 
     // end request if body values are empty/null
-    if (!username || !email) {
+    if (!email) {
       res.status(400).json({
         msg: 'All fields must have values...',
       });
@@ -20,12 +22,12 @@ export async function DeleteUser({ body }: Request, res: Response) {
 
     const user_check = await dbq<Users>({
       query_string: check_username_and_email_query,
-      query_params: [username, email],
+      query_params: [username!, email],
     });
 
     if (!user_check) {
       res.status(404).json({
-        msg: 'No user found',
+        msg: 'Email must match Username...',
       });
       return;
     }
@@ -40,6 +42,6 @@ export async function DeleteUser({ body }: Request, res: Response) {
       status: 'success',
     });
   } catch (error) {
-    console.log(error);
+    InternalError(error, res.status);
   }
 }
