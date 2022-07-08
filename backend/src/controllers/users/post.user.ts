@@ -1,22 +1,50 @@
 import type { Request, Response } from 'express';
 import type { Users } from 'src/models/Users';
+import { InternalError } from 'src/util/util';
 import { dbq } from 'src/db/db';
-import { get_user_query } from 'src/db/sql/users.sql';
+import {
+  post_check_username_query,
+  post_user_query,
+} from 'src/db/sql/users.sql';
 
-export async function GetUser(req: Request, res: Response) {
+export async function PostUser({ body }: Request, res: Response) {
   try {
-    const { id } = req.params;
+    // todo check for existing username
+
+    let { firstname, lastname, email, username, password } = body;
+
+    // end request if body values are empty/null
+    if (!firstname || !lastname || !email || !username || !password) {
+      res.status(400).json({
+        msg: 'All fields must have values...',
+      });
+      return;
+    }
+
+    const user_check = await dbq<Users>({
+      query_string: post_check_username_query,
+      query_params: [username, email],
+      query_rows: 'one',
+    });
+
+    if (user_check) {
+      res.status(400).json({
+        msg: 'Username or Email already exists...',
+      });
+      return;
+    }
+
     const user = await dbq<Users>({
-      query_string: get_user_query,
-      query_params: [id],
+      query_string: post_user_query,
+      query_params: [firstname, lastname, email, username, password],
       query_rows: 'one',
     });
 
     res.status(200).json({
       user,
-      status: 'success',
+      msg: 'success',
     });
   } catch (error) {
-    console.log(error);
+    InternalError(error, res.status);
   }
 }
