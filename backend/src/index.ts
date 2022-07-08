@@ -2,13 +2,14 @@ import 'reflect-metadata';
 import 'module-alias/register';
 require('dotenv').config();
 import express, { json } from 'express';
-import { cfg, prod } from 'src/env';
 import cors from 'src/middleware/cors';
 import { express_session } from 'src/middleware/redis.session';
 import { router } from 'src/routes/router';
 import TypeOrmInit from 'src/db/typeorm';
 import { ep_log } from 'src/middleware/logger';
 import { redis } from 'src/db/redis';
+import { cfg, prod } from 'src/env';
+
 // this app will only be used for main server
 // configuration, including initial middleware.
 const app = express();
@@ -40,7 +41,6 @@ app.use(ep_log);
       console.log('live @ ' + cfg.server.path + cfg.server.port)
     );
   } catch (error) {
-    if (error instanceof Error) return console.log(error.message);
-    return console.log('Unknown Error');
+    console.log((<Error>error).message);
   }
 })();
