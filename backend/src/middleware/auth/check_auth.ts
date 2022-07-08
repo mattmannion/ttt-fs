@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import { InternalError } from 'src/util/util';
+
 export default function auth_check(
   req: Request,
   res: Response,
@@ -11,6 +13,6 @@ export default function auth_check(
       });
     else next();
   } catch (error) {
-    console.log(error);
+    InternalError(error, res.status);
   }
 }

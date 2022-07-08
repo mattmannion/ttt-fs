@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --coverage --watchAll",
+    "test": "jest --coverage --watchAll ./dist",
     "ts": "tsc -w",
     "rf": "rimraf dist/*",
     "mon": "TYPEORM_LOGGING=true TYPEORM_HOST=localhost NODE_ENV=dev nodemon dist/index.js",
-    "dev": "run-p rf ts mon",
+    "dev": "run-p rf ts",
     "stage": "rimraf dist/* && tsc && TYPEORM_LOGGING=false TYPEORM_HOST=localhost NODE_ENV=dev node dist/index.js",
     "start": "rimraf dist/* && tsc && NODE_ENV=prod node dist/index.js"
   },
