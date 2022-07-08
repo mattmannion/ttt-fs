@@ -41,7 +41,7 @@ export async function dbq<T>({
   query_rows,
 }: DatabaseQuery): Promise<T> {
   if (!query_params) query_params = [];
-  if (!query_rows) query_rows = 'all';
+  if (!query_rows) query_rows = 'one';
   return (await db
     .query(query_string, query_params)
     .then(({ rows }) => (query_rows === 'all' ? rows : rows[0]))) as T;

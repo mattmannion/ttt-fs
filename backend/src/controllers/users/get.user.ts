@@ -9,7 +9,6 @@ export async function GetUser(req: Request, res: Response) {
     const user = await dbq<Users>({
       query_string: get_user_query,
       query_params: [id],
-      query_rows: 'one',
     });
 
     res.status(200).json({

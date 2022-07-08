@@ -4,7 +4,10 @@ import type { Users } from 'src/models/Users';
 
 describe('checks the return types from the database', function () {
   it('should return an array', async function () {
-    const users = await dbq<Users[]>({ query_string: get_users_query });
+    const users = await dbq<Users[]>({
+      query_string: get_users_query,
+      query_rows: 'all',
+    });
 
     expect(users).toBeInstanceOf(Array);
   });
@@ -13,7 +16,6 @@ describe('checks the return types from the database', function () {
     const user = await dbq<Users>({
       query_string: get_user_query,
       query_params: ['1'],
-      query_rows: 'one',
     });
 
     expect(user).toBeInstanceOf(Object);

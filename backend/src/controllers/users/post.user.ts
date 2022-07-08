@@ -24,7 +24,6 @@ export async function PostUser({ body }: Request, res: Response) {
     const user_check = await dbq<Users>({
       query_string: check_username_or_email_query,
       query_params: [username, email],
-      query_rows: 'one',
     });
 
     if (user_check) {
@@ -37,7 +36,6 @@ export async function PostUser({ body }: Request, res: Response) {
     const user = await dbq<Users>({
       query_string: post_user_query,
       query_params: [firstname, lastname, email, username, password],
-      query_rows: 'one',
     });
 
     res.status(200).json({
