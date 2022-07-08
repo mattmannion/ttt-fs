@@ -3,7 +3,7 @@ import type { Users } from 'src/models/Users';
 import { InternalError } from 'src/util/util';
 import { dbq } from 'src/db/db';
 import {
-  post_check_username_query,
+  check_username_or_email_query,
   post_user_query,
 } from 'src/db/sql/users.sql';
 
@@ -22,7 +22,7 @@ export async function PostUser({ body }: Request, res: Response) {
     }
 
     const user_check = await dbq<Users>({
-      query_string: post_check_username_query,
+      query_string: check_username_or_email_query,
       query_params: [username, email],
       query_rows: 'one',
     });
@@ -42,7 +42,7 @@ export async function PostUser({ body }: Request, res: Response) {
 
     res.status(200).json({
       user,
-      msg: 'success',
+      status: 'success',
     });
   } catch (error) {
     InternalError(error, res.status);

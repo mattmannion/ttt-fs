@@ -7,8 +7,14 @@ select username from users
 where id = $1;
 `;
 
-export const post_check_username_query = `
-select username, email from users where username = $1 or email = $2;
+export const check_username_or_email_query = `
+select id, username, email from users 
+where username = $1 or email = $2;
+`;
+
+export const check_username_and_email_query = `
+select id, username, email from users 
+where username = $1 and email = $2;
 `;
 
 export const post_user_query = `
@@ -26,5 +32,10 @@ values(
   $4,
   $5
 )
+returning username;
+`;
+
+export const delete_user_query = `
+delete from users where id = $1
 returning username;
 `;
