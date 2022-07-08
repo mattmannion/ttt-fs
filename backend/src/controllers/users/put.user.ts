@@ -48,7 +48,7 @@ export async function PutUser({ body }: Request, res: Response) {
     });
 
     res.status(200).json({
-      msg: `User ${user_check.username} has been updated.`,
+      msg: `User ${user.username} has been updated.`,
       status: 'success',
     });
   } catch (error) {
