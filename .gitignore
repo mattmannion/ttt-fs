@@ -1,6 +1,8 @@
-ne/.env
-be/.env
-be/app/build
+backend/.env
+backend/coverage/
+
+frontend/.env
+frontend/.next
 
 node_modules
 

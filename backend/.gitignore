@@ -4,4 +4,4 @@ node_modules/
 
 app/
 
-src/coverage/
+coverage/*
