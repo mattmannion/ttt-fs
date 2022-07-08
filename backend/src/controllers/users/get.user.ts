@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express';
 import type { Users } from 'src/models/Users';
+import { InternalError } from 'src/util/util';
 import { dbq } from 'src/db/db';
 import { get_user_query } from 'src/db/sql/users.sql';
-import { InternalError } from 'src/util/util';
 
 export async function GetUser(req: Request, res: Response) {
   try {
