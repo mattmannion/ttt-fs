@@ -1,27 +1,14 @@
-import type { Response } from 'express';
-
-export function InternalError(
-  error: unknown,
-  status: (code: number) => Response<any, Record<string, any>>
-): void {
-  const { message } = <Error>error;
-
-  console.log(message);
-
-  status(500).json({
-    status: 'failure',
-    msg: message,
-  });
+export function InternalError(error: unknown) {
+  return {
+    json: {
+      status: 'failure',
+      msg: (<Error>error).message,
+    },
+    code: 500,
+  };
 }
 
-/** Standard console.log error.message */
-export function CatchError(error: unknown) {
-  console.log((<Error>error).message);
-}
-
-export const sleep = (s: number) => new Promise((r) => setTimeout(r, s));
-
-export function time_stamp() {
+export function time_stamp(): string {
   const t = new Date();
   return `>> ${t.getHours()}:${t.getMinutes()}:${t.getSeconds()}`;
 }

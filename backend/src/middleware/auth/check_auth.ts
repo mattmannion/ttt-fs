@@ -9,6 +9,7 @@ export function check_auth(req: Request, res: Response, next: NextFunction) {
       });
     else next();
   } catch (error) {
-    InternalError(error, res.status);
+    const { code, json } = InternalError(error);
+    res.status(code).json(json);
   }
 }

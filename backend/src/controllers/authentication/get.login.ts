@@ -13,6 +13,7 @@ export async function GetLogin(req: Request, res: Response) {
       status: logged_in,
     });
   } catch (error) {
-    InternalError(error, res.status);
+    const { code, json } = InternalError(error);
+    res.status(code).json(json);
   }
 }

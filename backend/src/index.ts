@@ -1,7 +1,8 @@
 import 'reflect-metadata';
 import 'module-alias/register';
 require('dotenv').config();
-import express, { json } from 'express';
+import { json } from 'express';
+import { app } from 'src/server';
 import cors from 'src/middleware/cors';
 import { express_session } from 'src/middleware/redis.session';
 import { router } from 'src/routes/router';
@@ -12,7 +13,6 @@ import { cfg, prod } from 'src/env';
 
 // this app will only be used for main server
 // configuration, including initial middleware.
-const app = express();
 
 // if behind a proxy like nginx
 app.set('trust proxy', prod);
