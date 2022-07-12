@@ -25,14 +25,15 @@ describe('Authorization middleware', () => {
     next = jest.fn();
   });
 
-  test('should 401 if session data is not set', () => {
+  it('should 401 if session data is not set', () => {
     const req = request();
     const res = response();
+    req.session = undefined!;
     check_auth(req, res, next);
     expect(res.status).toHaveBeenCalledWith(401);
   });
 
-  test('should 200 with username from session if session data is set', () => {
+  it('should 200 with username from session if session data is set', () => {
     const req = request();
     const res = response();
     req.session.username = 'mm';
