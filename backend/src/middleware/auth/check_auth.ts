@@ -1,11 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { InternalError } from 'src/util/util';
 
-export default function auth_check(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export function check_auth(req: Request, res: Response, next: NextFunction) {
   try {
     if (!req.session || !req.session.username)
       res.status(401).json({

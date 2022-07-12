@@ -14,6 +14,11 @@ export function InternalError(
   });
 }
 
+/** Standard console.log error.message */
+export function CatchError(error: unknown) {
+  console.log((<Error>error).message);
+}
+
 export const sleep = (s: number) => new Promise((r) => setTimeout(r, s));
 
 export function time_stamp() {

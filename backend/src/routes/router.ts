@@ -10,13 +10,11 @@ interface DefaultRouter {
 /** All routers are coalesced into this exported array to be spread(...) as middleware */
 export async function router(): Promise<Router[]> {
   return (
-    await new Promise((resolve, reject) => {
-      glob(cfg.rootdir + '/routes/routers/**/*.js', function (err, res) {
-        if (err) reject(err);
-        else
-          Promise.all(
-            res.map((file) => import(file.replace(cfg.rootdir, 'src/')))
-          ).then((modules) => resolve(modules));
+    await new Promise((resolve, _) => {
+      glob(cfg.rootdir + '/routes/routers/**/*', function (_, res) {
+        Promise.all(
+          res.map((file) => import(file.replace(cfg.rootdir, 'src/')))
+        ).then((modules) => resolve(modules));
       });
     }).then((modules) => modules as DefaultRouter[])
   ).map((m) => m.default);
