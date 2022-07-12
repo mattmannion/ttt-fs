@@ -1,23 +1,19 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 const { env } = process;
 
-export const prod: boolean = env.NODE_ENV === 'prod' ? true : false;
+export const prod = env.NODE_ENV === 'prod' ? true : false;
 
 console.log(prod ? 'prod' : 'dev');
 
 export const cfg = {
   rootdir: __dirname,
   server: {
-    port: env.PORT ? +env.PORT : 7890,
-    path: prod ? env.LOCATION! : 'http://localhost:',
+    port: +env.PORT!,
+    path: env.LOCATION!,
   },
   redis: {
-    host: prod ? env.REDIS_HOST! : 'localhost',
-    port: prod ? +env.REDIS_PORT! : 6379,
-    password: prod ? env.REDIS_PW! : undefined,
-    get url(): string {
-      return `redis://${this.host}:${this.port}`;
-    },
+    password: env.REDIS_PW!,
+    url: `redis://${env.REDIS_HOST!}:${env.REDIS_PORT!}`,
   },
   session: {
     name: env.SESSION_NAME!,
@@ -25,29 +21,17 @@ export const cfg = {
     secret: env.SESSION_SECRET!,
   },
   cors: {
-    prodlist: new Set([env.WL_1!, env.WL_2!]),
-    devlist: new Set([
-      'http://localhost:3000',
-      'http://localhost:7890',
-      undefined,
-    ]),
-    whitelist() {
-      return prod ? this.prodlist : this.devlist;
-    },
+    whitelist: new Set([env.WL_1!, env.WL_2!, undefined]),
   },
 };
 
 export const pg: PostgresConnectionOptions = {
-  host: prod ? env.TYPEORM_HOST! : 'localhost',
-  database: prod ? env.TYPEORM_DATABASE! : 'ttt',
-  username: prod ? env.TYPEORM_USERNAME! : 'postgres',
-  password: prod ? env.TYPEORM_PASSWORD! : 'postgres',
-  port: prod ? +env.TYPEORM_PORT! : 5432,
-  type: prod ? (env.TYPEORM_CONNECTION! as 'postgres') : 'postgres',
-  synchronize: prod
-    ? env.TYPEORM_SYNCRONIZE! === 'true'
-      ? true
-      : false
-    : true,
-  logging: prod ? (env.TYPEORM_LOGGING! === 'true' ? true : false) : true,
+  host: env.TYPEORM_HOST!,
+  database: env.TYPEORM_DATABASE!,
+  username: env.TYPEORM_USERNAME!,
+  password: env.TYPEORM_PASSWORD!,
+  port: +env.TYPEORM_PORT!,
+  type: env.TYPEORM_CONNECTION! as 'postgres',
+  synchronize: Boolean(env.TYPEORM_SYNCRONIZE!),
+  logging: Boolean(env.TYPEORM_LOGGING!),
 };
