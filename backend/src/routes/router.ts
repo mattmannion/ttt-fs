@@ -1,6 +1,6 @@
 import type { Router } from 'express';
 import glob from 'glob';
-import { cfg } from 'src/env';
+import { cfg } from 'src/util/env';
 
 /** the default property comes from the export default convention */
 interface DefaultRouter {
@@ -11,9 +11,9 @@ interface DefaultRouter {
 export async function router(): Promise<Router[]> {
   return (
     await new Promise((resolve, _) => {
-      glob(cfg.rootdir + '/routes/routers/**/*', function (_, res) {
+      glob(__dirname + '/routers/**/*', function (_, res) {
         Promise.all(
-          res.map((file) => import(file.replace(cfg.rootdir, 'src/')))
+          res.map((file) => import(file.replace(cfg.rootdir, '/src')))
         ).then((modules) => resolve(modules));
       });
     }).then((modules) => modules as DefaultRouter[])

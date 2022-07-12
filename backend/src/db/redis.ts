@@ -1,6 +1,6 @@
 import type { Client } from 'connect-redis';
 import { createClient } from 'redis';
-import { cfg } from 'src/env';
+import { cfg } from 'src/util/env';
 
 export const redis = createClient({
   legacyMode: true,

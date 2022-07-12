@@ -1,5 +1,5 @@
 import cors from 'cors';
-import { cfg } from 'src/env';
+import { cfg } from 'src/util/env';
 
 // below is the original error I was sending
 const error: Error = <any>'Not Allowed By CORS';
