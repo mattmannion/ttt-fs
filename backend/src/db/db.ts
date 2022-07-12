@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { pg } from 'src/env';
+import { pg } from 'src/util/env';
 
 const db = new Pool({
   idleTimeoutMillis: 100,

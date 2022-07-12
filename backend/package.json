@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --coverage --watchAll ./dist",
+    "test": "jest --coverage --watchAll ./src",
     "ts": "tsc -w",
     "rf": "rimraf dist/*",
     "mon": "TYPEORM_LOGGING=true TYPEORM_HOST=localhost NODE_ENV=dev nodemon dist/index.js",

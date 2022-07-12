@@ -36,6 +36,7 @@ export async function PostLogin({ body, session }: Request, res: Response) {
       });
     }
   } catch (error) {
-    InternalError(error, res.status);
+    const { code, json } = InternalError(error);
+    res.status(code).json(json);
   }
 }

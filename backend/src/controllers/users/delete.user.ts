@@ -42,6 +42,7 @@ export async function DeleteUser({ body, session }: Request, res: Response) {
       status: 'success',
     });
   } catch (error) {
-    InternalError(error, res.status);
+    const { code, json } = InternalError(error);
+    res.status(code).json(json);
   }
 }

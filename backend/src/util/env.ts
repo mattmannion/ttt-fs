@@ -3,8 +3,6 @@ const { env } = process;
 
 export const prod = env.NODE_ENV === 'prod' ? true : false;
 
-console.log(prod ? 'prod' : 'dev');
-
 export const cfg = {
   rootdir: __dirname,
   server: {

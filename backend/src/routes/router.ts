@@ -1,6 +1,6 @@
 import type { Router } from 'express';
 import glob from 'glob';
-import { cfg } from 'src/env';
+import { cfg } from 'src/util/env';
 
 /** the default property comes from the export default convention */
 interface DefaultRouter {
@@ -10,14 +10,16 @@ interface DefaultRouter {
 /** All routers are coalesced into this exported array to be spread(...) as middleware */
 export async function router(): Promise<Router[]> {
   return (
-    await new Promise((resolve, reject) => {
-      glob(cfg.rootdir + '/routes/routers/**/*.js', function (err, res) {
-        if (err) reject(err);
-        else
-          Promise.all(
-            res.map((file) => import(file.replace(cfg.rootdir, 'src/')))
-          ).then((modules) => resolve(modules));
+    await new Promise((resolve, _) => {
+      glob(__dirname + '/routers/**/*', function (_, res) {
+        Promise.all(
+          res.map((file) => import(file.replace(cfg.rootdir, '/src')))
+        ).then((modules) => resolve(modules));
       });
     }).then((modules) => modules as DefaultRouter[])
   ).map((m) => m.default);
 }
+
+// we are not catching any errors because if we can load these files
+// the server will not work anyways. knowing the error happens in router.ts
+// will be enough of a clue as that is the whole purpose of the file

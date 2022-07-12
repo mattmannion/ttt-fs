@@ -18,6 +18,7 @@ export async function Logout(req: Request, res: Response) {
       status: 'Logout Successful',
     });
   } catch (error) {
-    InternalError(error, res.status);
+    const { code, json } = InternalError(error);
+    res.status(code).json(json);
   }
 }

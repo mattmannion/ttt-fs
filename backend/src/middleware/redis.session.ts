@@ -1,7 +1,7 @@
 import connectRedis from 'connect-redis';
 import session from 'express-session';
 import { client } from 'src/db/redis';
-import { cfg, prod } from 'src/env';
+import { cfg, prod } from 'src/util/env';
 
 const RedisStore = connectRedis(session);
 

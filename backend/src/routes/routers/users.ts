@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import auth_check from 'src/middleware/auth/check_auth';
+import { check_auth } from 'src/middleware/auth/check_auth';
 import { GetProfile } from 'src/controllers/users/get.profile';
 import { GetUsers } from 'src/controllers/users/get.users';
 import { GetUser } from 'src/controllers/users/get.user';
@@ -14,12 +14,12 @@ users.route('/users/:id').get(GetUser);
 users.route('/users').get(GetUsers).post(PostUser);
 
 users
-  .use(auth_check)
+  .use(check_auth)
   .route('/users')
   .put(PutUser)
   .patch(PutUser)
   .delete(DeleteUser);
 
-users.use(auth_check).route('/profile').get(GetProfile);
+users.use(check_auth).route('/profile').get(GetProfile);
 
 export default users;
