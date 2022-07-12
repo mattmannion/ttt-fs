@@ -31,7 +31,7 @@ export const cfg = {
       'http://localhost:7890',
       undefined,
     ]),
-    whitelist() {
+    get whitelist() {
       return prod ? this.prodlist : this.devlist;
     },
   },

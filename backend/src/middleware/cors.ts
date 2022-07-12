@@ -9,7 +9,7 @@ const error: Error = <any>'Not Allowed By CORS';
 export default cors({
   optionsSuccessStatus: 200,
   origin: function (origin, callback) {
-    if (cfg.cors.whitelist().has(origin!)) return callback(null, origin);
+    if (cfg.cors.whitelist.has(origin!)) return callback(null, origin);
     else return callback(error, origin);
   },
   credentials: true,
