@@ -11,7 +11,7 @@ import { ep_log } from 'src/middleware/logger';
 import { redis } from 'src/db/redis';
 // this app will only be used for main server
 // configuration, including initial middleware.
-const app = express();
+export const app = express();
 
 // if behind a proxy like nginx
 app.set('trust proxy', prod);

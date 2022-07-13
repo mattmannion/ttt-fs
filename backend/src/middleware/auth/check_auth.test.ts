@@ -1,43 +1,21 @@
-import type { NextFunction, Request, Response } from 'express';
 import { check_auth } from 'src/middleware/auth/check_auth';
+import { req, resp, next } from 'src/__mocks__/express.mock';
 
 describe('Authorization middleware', () => {
-  let request: () => Request;
-  let response: () => Response;
-  let next: NextFunction;
-
   beforeEach(() => {
-    request = () => {
-      return {
-        session: {
-          username: '',
-        },
-      } as Request;
-    };
-
-    response = () => {
-      const res = {} as Response;
-      res.status = jest.fn().mockReturnValue(res);
-      res.json = jest.fn().mockReturnValue(res);
-      return res;
-    };
-
-    next = jest.fn();
+    req.session.username = undefined;
   });
 
-  it('should 401 if session data is not set', () => {
-    const req = request();
-    const res = response();
-    req.session = undefined!;
-    check_auth(req, res, next);
-    expect(res.status).toHaveBeenCalledWith(401);
-  });
-
-  it('should 200 with username from session if session data is set', () => {
-    const req = request();
-    const res = response();
+  it('should call the next when data is set', () => {
+    const res = resp();
     req.session.username = 'mm';
     check_auth(req, res, next);
     expect(next).toBeCalledTimes(1);
+  });
+
+  it('should 401 if session data is not set', () => {
+    const res = resp();
+    check_auth(req, res, next);
+    expect(res.status).toHaveBeenCalledWith(401);
   });
 });
