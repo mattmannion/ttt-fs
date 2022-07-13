@@ -1,8 +1,10 @@
 backend/.env
 backend/coverage/
+backend/yarn-error.log
 
 frontend/.env
 frontend/.next
+frontend/yarn-error.log
 
 node_modules
 
