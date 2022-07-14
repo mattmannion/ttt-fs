@@ -1,12 +1,12 @@
 import { Pool } from 'pg';
-import { pg } from 'src/util/env';
+import { db_co } from 'src/util/env';
 
 const db = new Pool({
   idleTimeoutMillis: 100,
-  password: pg.password,
-  user: pg.username,
-  database: pg.database,
-  port: pg.port,
+  password: db_co.password,
+  user: db_co.username,
+  database: db_co.database,
+  port: db_co.port,
 });
 
 interface DatabaseQuery {

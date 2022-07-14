@@ -1,11 +1,11 @@
 import { DataSource } from 'typeorm';
-import { pg } from 'src/util/env';
+import { db_co } from 'src/util/env';
 import { models } from 'src/db/models';
 
 export async function TypeOrmInit() {
   try {
     const DS = new DataSource({
-      ...pg,
+      ...db_co,
       entities: await models,
     });
 

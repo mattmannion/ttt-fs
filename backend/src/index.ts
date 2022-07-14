@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import 'module-alias/register';
-require('dotenv').config();
 import { cfg } from 'src/util/env';
 import { router } from 'src/routes/router';
 import { TypeOrmInit } from 'src/db/typeorm';
