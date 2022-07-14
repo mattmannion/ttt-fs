@@ -5,7 +5,7 @@ const error: Error = <any>'Not Allowed By CORS';
 
 // const error: Error = <any>Error();
 
-export const mw_cors = (wl: Set<string | undefined>) =>
+export const mw_cors = (wl: Set<string | undefined | null>) =>
   cors({
     optionsSuccessStatus: 200,
     origin: (origin, fn) => {

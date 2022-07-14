@@ -1,4 +1,3 @@
-import express from 'express';
 import glob from 'glob';
 import { cfg } from 'src/util/env';
 import supertest from 'supertest';
@@ -58,4 +57,3 @@ export function time_stamp(): string {
 }
 
 export const super_request = supertest(cfg.server.path + cfg.server.port);
-export const testapp = express();

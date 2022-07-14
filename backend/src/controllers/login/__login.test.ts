@@ -1,46 +1,30 @@
-import supertest from 'supertest';
 import { req, resp } from 'src/__mocks__/express.mock';
 import { Logout } from 'src/controllers/login/delete.login';
-import { super_request, testapp } from 'src/util/util';
-import { mw_cors } from 'src/middleware/cors';
 
-const ep = '/login';
+// const ep = '/login';
 
 describe('Login test suite', () => {
-  describe('MW Intergration Test', () => {
-    it('tests logger', async () => {
-      await super_request.get(ep);
+  describe('Delete Suite', () => {
+    const res = resp();
+    beforeEach(() => {
+      req.session.username = 'mack';
+      jest.clearAllMocks();
     });
-  });
 
-  it('tests cors whitelist failure', async () => {
-    const res = await supertest(
-      testapp.use(mw_cors(new Set(['http://localhost:12345'])))
-    ).get(ep);
-    expect(res.status).toStrictEqual(500);
-  });
-});
+    it('must return status 202 if no session username', () => {
+      req.session.username = undefined;
 
-describe('Delete Suite', () => {
-  const res = resp();
-  beforeEach(() => {
-    req.session.username = 'mack';
-    jest.clearAllMocks();
-  });
+      Logout(req, res);
 
-  it('must return status 202 if no session username', () => {
-    req.session.username = undefined;
+      expect(res.status).toBeCalledWith(202);
+      expect(res.json).toBeCalledWith({ status: 'No user to logout' });
+    });
 
-    Logout(req, res);
+    it('checks if session terminates and returns 200 status', () => {
+      Logout(req, res);
 
-    expect(res.status).toBeCalledWith(202);
-    expect(res.json).toBeCalledWith({ status: 'No user to logout' });
-  });
-
-  it('checks if session terminates and returns 200 status', () => {
-    Logout(req, res);
-
-    expect(res.status).toBeCalledWith(200);
-    expect(res.json).toBeCalledWith({ status: 'Logout Successful' });
+      expect(res.status).toBeCalledWith(200);
+      expect(res.json).toBeCalledWith({ status: 'Logout Successful' });
+    });
   });
 });
