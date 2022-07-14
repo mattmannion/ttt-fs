@@ -11,7 +11,7 @@ interface DefaultRouter {
 export async function router(): Promise<Router[]> {
   return (
     await new Promise((resolve, _) => {
-      glob(__dirname + '/routers/**/*', function (_, res) {
+      glob(__dirname + '/routers/**/*.router.*', function (_, res) {
         Promise.all(
           res.map((file) => import(file.replace(cfg.rootdir, '/src')))
         ).then((modules) => resolve(modules));
