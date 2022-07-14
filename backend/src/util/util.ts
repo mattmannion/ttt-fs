@@ -1,5 +1,7 @@
+import express from 'express';
 import glob from 'glob';
 import { cfg } from 'src/util/env';
+import supertest from 'supertest';
 
 /** the default property comes from the export default convention */
 interface Default<T> {
@@ -54,3 +56,6 @@ export function time_stamp(): string {
   const t = new Date();
   return `>> ${t.getHours()}:${t.getMinutes()}:${t.getSeconds()}`;
 }
+
+export const super_request = supertest(cfg.server.path + cfg.server.port);
+export const testapp = express();

@@ -1,7 +1,7 @@
+import supertest from 'supertest';
 import { req, resp } from 'src/__mocks__/express.mock';
 import { Logout } from 'src/controllers/login/delete.login';
-import supertest from 'supertest';
-import { app } from 'src/server';
+import { super_request, testapp } from 'src/util/util';
 import { mw_cors } from 'src/middleware/cors';
 
 const ep = '/login';
@@ -9,13 +9,13 @@ const ep = '/login';
 describe('Login test suite', () => {
   describe('MW Intergration Test', () => {
     it('tests logger', async () => {
-      await supertest(app).get(ep);
+      await super_request.get(ep);
     });
   });
 
   it('tests cors whitelist failure', async () => {
     const res = await supertest(
-      app.use(mw_cors(new Set('http://localhost:1234')))
+      testapp.use(mw_cors(new Set(['http://localhost:12345'])))
     ).get(ep);
     expect(res.status).toStrictEqual(500);
   });
