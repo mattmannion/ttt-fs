@@ -4,7 +4,7 @@ const { env } = process;
 export const prod = env.NODE_ENV === 'prod' ? true : false;
 
 export const cfg = {
-  rootdir: __dirname,
+  rootdir: __dirname + '/..',
   server: {
     port: +env.PORT!,
     path: env.LOCATION!,
@@ -24,12 +24,13 @@ export const cfg = {
 };
 
 export const pg: PostgresConnectionOptions = {
+  type: <'postgres'>env.TYPEORM_CONNECTION!,
   host: env.TYPEORM_HOST!,
+  port: +env.TYPEORM_PORT!,
   database: env.TYPEORM_DATABASE!,
   username: env.TYPEORM_USERNAME!,
   password: env.TYPEORM_PASSWORD!,
-  port: +env.TYPEORM_PORT!,
-  type: env.TYPEORM_CONNECTION! as 'postgres',
+  entities: [],
   synchronize: Boolean(env.TYPEORM_SYNCRONIZE!),
   logging: Boolean(env.TYPEORM_LOGGING!),
 };

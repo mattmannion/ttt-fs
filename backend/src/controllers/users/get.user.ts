@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import type { Users } from 'src/models/Users';
+import type { Users } from 'src/db/models/Users.model';
 import { InternalError } from 'src/util/util';
 import { dbq } from 'src/db/db';
 import { get_user_query } from 'src/db/sql/users.sql';
