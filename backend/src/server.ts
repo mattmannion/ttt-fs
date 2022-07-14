@@ -4,7 +4,7 @@ import express, { json } from 'express';
 import { mw_cors } from 'src/middleware/cors';
 import { express_session } from 'src/middleware/redis.session';
 import { router } from 'src/routes/router';
-import { cfg, prod } from 'src/util/env';
+import { prod } from 'src/util/env';
 
 // configuration, including initial middleware.
 const app = express();
@@ -17,17 +17,11 @@ app.use(express_session);
 
 // server config
 app.disable('x-powered-by');
-app.options('*', mw_cors(cfg.cors.whitelist));
-app.use(mw_cors(cfg.cors.whitelist));
+app.options('*', mw_cors);
+app.use(mw_cors);
 
 app.use(json());
 
-(async () => {
-  try {
-    app.use(...(await router));
-  } catch (error) {
-    console.log((<Error>error).message);
-  }
-})();
+(async () => app.use(...(await router)))();
 
 export { app };
