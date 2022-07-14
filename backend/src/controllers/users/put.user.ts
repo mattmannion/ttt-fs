@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import type { Users } from 'src/db/models/Users.model';
+import type { UsersModel } from 'src/db/models/Users.model';
 import { InternalError } from 'src/util/util';
 import { dbq } from 'src/db/db';
 import {
@@ -20,7 +20,7 @@ export async function PutUser({ body, session }: Request, res: Response) {
       return;
     }
 
-    const user_check = await dbq<Users>({
+    const user_check = await dbq<UsersModel>({
       query_string: check_username_and_email_query,
       query_params: [username!, email],
     });
@@ -32,7 +32,7 @@ export async function PutUser({ body, session }: Request, res: Response) {
       return;
     }
 
-    const user = await dbq<Users>({
+    const user = await dbq<UsersModel>({
       query_string: get_user_query,
       query_params: [user_check.id.toString()],
     });
@@ -41,7 +41,7 @@ export async function PutUser({ body, session }: Request, res: Response) {
     lastname = lastname ? lastname : user.lastname;
     password = password ? password : user.password;
 
-    await dbq<Users>({
+    await dbq<UsersModel>({
       query_string: put_user_query,
       query_params: [user_check.id.toString(), firstname, lastname, password],
     });

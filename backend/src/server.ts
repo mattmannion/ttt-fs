@@ -4,10 +4,9 @@ import { ep_log } from 'src/middleware/logger';
 import { express_session } from 'src/middleware/redis.session.js';
 import { prod } from 'src/util/env.js';
 
-const app = express();
-
 // this file will only be used for main server
 // configuration, including initial middleware.
+const app = express();
 
 // if behind a proxy like nginx
 app.set('trust proxy', prod);

@@ -1,11 +1,19 @@
-import { createConnection } from 'typeorm';
+import { DataSource } from 'typeorm';
+import { pg } from 'src/util/env';
+import { models } from 'src/db/models';
 
-export default async function TypeOrmInit() {
+export async function TypeOrmInit() {
   try {
-    await createConnection();
+    const DS = new DataSource({
+      ...pg,
+      entities: await models,
+    });
+
+    await DS.initialize();
+    await DS.synchronize();
+
     console.log('db connected');
   } catch (error) {
-    console.log('connection failed');
     console.log((<Error>error).message);
   }
 }

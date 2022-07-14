@@ -3,7 +3,7 @@ import 'module-alias/register';
 require('dotenv').config();
 import { cfg } from 'src/util/env';
 import { router } from 'src/routes/router';
-import TypeOrmInit from 'src/db/typeorm';
+import { TypeOrmInit } from 'src/db/typeorm';
 import { redis } from 'src/db/redis';
 import { app } from 'src/server';
 
