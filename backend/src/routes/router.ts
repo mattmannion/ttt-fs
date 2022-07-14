@@ -20,6 +20,6 @@ export async function router(): Promise<Router[]> {
   ).map((m) => m.default);
 }
 
-// we are not catching any errors because if we can load these files
+// we are not catching any errors because if we cannot load these files
 // the server will not work anyways. knowing the error happens in router.ts
 // will be enough of a clue as that is the whole purpose of the file
