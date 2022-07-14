@@ -18,7 +18,7 @@ export function ep_log(
 }
 
 /** task_log is middleware that prints the time a task was started to the console */
-export function task_log(_req: Request, _res: Response, next: NextFunction) {
-  console.log('task started at ' + time_stamp());
-  next();
-}
+// export function task_log(_req: Request, _res: Response, next: NextFunction) {
+//   console.log('task started at ' + time_stamp());
+//   next();
+// }
