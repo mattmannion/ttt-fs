@@ -1,24 +1,18 @@
 import type { Request, Response } from 'express';
-import { InternalError } from 'src/util/util';
 
-export async function Logout(req: Request, res: Response) {
-  try {
-    let { session } = req;
+export function Logout(req: Request, res: Response) {
+  let { session } = req;
 
-    if (!session.username) {
-      res.status(202).json({
-        status: 'No user to logout',
-      });
-      return;
-    }
-
-    session.destroy(() => (session.cookie.expires = new Date()));
-
-    res.status(200).json({
-      status: 'Logout Successful',
+  if (!session.username) {
+    res.status(202).json({
+      status: 'No user to logout',
     });
-  } catch (error) {
-    const { code, json } = InternalError(error);
-    res.status(code).json(json);
+    return;
   }
+
+  session.destroy(() => (session.cookie.expires = new Date()));
+
+  res.status(200).json({
+    status: 'Logout Successful',
+  });
 }
