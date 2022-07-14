@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import type { Users } from 'src/models/Users';
+import type { UsersModel } from 'src/db/models/Users.model';
 import { InternalError } from 'src/util/util';
 import { dbq } from 'src/db/db';
 import { login_query } from 'src/db/sql/authentication.sql';
@@ -15,7 +15,7 @@ export async function PostLogin({ body, session }: Request, res: Response) {
       return;
     }
 
-    const user = await dbq<Users>({
+    const user = await dbq<UsersModel>({
       query_string: login_query,
       query_params: [username, password],
     });

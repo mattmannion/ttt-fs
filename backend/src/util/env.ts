@@ -1,10 +1,14 @@
+import { config } from 'dotenv';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+
+config();
+
 const { env } = process;
 
 export const prod = env.NODE_ENV === 'prod' ? true : false;
 
 export const cfg = {
-  rootdir: __dirname,
+  rootdir: __dirname + '/..',
   server: {
     port: +env.PORT!,
     path: env.LOCATION!,
@@ -23,13 +27,13 @@ export const cfg = {
   },
 };
 
-export const pg: PostgresConnectionOptions = {
+export const db_co: PostgresConnectionOptions = {
+  type: env.TYPEORM_CONNECTION! as 'postgres',
   host: env.TYPEORM_HOST!,
+  port: +env.TYPEORM_PORT!,
   database: env.TYPEORM_DATABASE!,
   username: env.TYPEORM_USERNAME!,
   password: env.TYPEORM_PASSWORD!,
-  port: +env.TYPEORM_PORT!,
-  type: env.TYPEORM_CONNECTION! as 'postgres',
-  synchronize: Boolean(env.TYPEORM_SYNCRONIZE!),
+  entities: [],
   logging: Boolean(env.TYPEORM_LOGGING!),
 };

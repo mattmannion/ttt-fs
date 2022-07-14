@@ -6,7 +6,7 @@ const error: Error = <any>'Not Allowed By CORS';
 
 // const error: Error = <any>Error();
 
-export default cors({
+export const mw_cors = cors({
   optionsSuccessStatus: 200,
   origin: function (origin, callback) {
     if (cfg.cors.whitelist.has(origin!)) return callback(null, origin);

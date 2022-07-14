@@ -1,10 +1,10 @@
-import cors from 'cors';
 import express, { json } from 'express';
+import { mw_cors } from 'src/middleware/cors.js';
 import { ep_log } from 'src/middleware/logger';
-import { express_session } from 'src/middleware/redis.session';
-import { prod } from 'src/util/env';
+import { express_session } from 'src/middleware/redis.session.js';
+import { prod } from 'src/util/env.js';
 
-// this app will only be used for main server
+// this file will only be used for main server
 // configuration, including initial middleware.
 const app = express();
 
@@ -16,8 +16,8 @@ app.use(express_session);
 
 // server config
 app.disable('x-powered-by');
-app.options('*', cors);
-app.use(cors);
+app.options('*', mw_cors);
+app.use(mw_cors);
 
 app.use(json());
 

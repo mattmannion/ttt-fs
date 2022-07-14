@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import type { Users } from 'src/models/Users';
+import type { UsersModel } from 'src/db/models/Users.model';
 import { InternalError } from 'src/util/util';
 import { dbq } from 'src/db/db';
 import {
@@ -21,7 +21,7 @@ export async function PostUser({ body }: Request, res: Response) {
       return;
     }
 
-    const user_check = await dbq<Users>({
+    const user_check = await dbq<UsersModel>({
       query_string: check_username_or_email_query,
       query_params: [username, email],
     });
@@ -33,7 +33,7 @@ export async function PostUser({ body }: Request, res: Response) {
       return;
     }
 
-    const user = await dbq<Users>({
+    const user = await dbq<UsersModel>({
       query_string: post_user_query,
       query_params: [firstname, lastname, email, username, password],
     });
