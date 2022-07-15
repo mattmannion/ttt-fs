@@ -19,7 +19,6 @@ app.use(express_session);
 app.disable('x-powered-by');
 app.options('*', mw_cors);
 app.use(mw_cors);
-
 app.use(json());
 
 (async () => app.use(...(await router)))();
