@@ -14,8 +14,8 @@ export async function PostLogin({ body, session }: Request, res: Response) {
   }
 
   const user = await dbq<UsersModel>({
-    query_string: login_query,
-    query_params: [username, password],
+    query: login_query,
+    params: [username, password],
   });
 
   if (user) {

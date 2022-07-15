@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --coverage --watchAll ./src",
+    "test": "jest --coverage --watchAll --detectOpenHandles ./src",
     "ts": "tsc -w",
     "rf": "rimraf dist/*",
     "mon": "nodemon dist/index.js",
@@ -26,6 +26,7 @@
     "pg": "^8.7.1",
     "redis": "^4.2.0",
     "reflect-metadata": "^0.1.13",
+    "sql-template-strings": "^2.2.2",
     "typeorm": "^0.3.7"
   },
   "devDependencies": {

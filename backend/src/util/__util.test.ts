@@ -4,7 +4,7 @@ process.env.NODE_ENV = 'prod';
 import { prod } from 'src/util/env';
 import { Router } from 'express';
 import { GlobImport, InternalError, time_stamp } from 'src/util/util';
-import users from 'src/routes/routers/users.router';
+import users_router from 'src/routes/routers/users.router';
 
 const MockError: unknown = {
   message: 'Mock Error Messge',
@@ -40,7 +40,7 @@ describe('Utility Test Suite', () => {
         file_ext: '.router.*',
       });
 
-      expect(router).toContain(users);
+      expect(router).toContain(users_router);
     });
 
     it('must return an array', async () => {

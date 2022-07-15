@@ -7,19 +7,19 @@ import { PostUser } from 'src/controllers/users/post.user';
 import { PutUser } from 'src/controllers/users/put.user';
 import { DeleteUser } from 'src/controllers/users/delete.user';
 
-const users = Router();
+const users_router = Router();
 
-users.route('/users/:id').get(GetUser);
+users_router.route('/users/:id').get(GetUser);
 
-users.route('/users').get(GetUsers).post(PostUser);
+users_router.route('/users').get(GetUsers).post(PostUser);
 
-users
+users_router
   .use(check_auth)
   .route('/users')
   .put(PutUser)
   .patch(PutUser)
   .delete(DeleteUser);
 
-users.use(check_auth).route('/profile').get(GetProfile);
+users_router.use(check_auth).route('/profile').get(GetProfile);
 
-export default users;
+export default users_router;

@@ -1,4 +1,6 @@
-export const login_query = `
+import { sql } from 'src/util/util';
+
+export const login_query = sql`
 select 
   id, 
   username 
