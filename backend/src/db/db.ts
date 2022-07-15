@@ -1,3 +1,4 @@
+import type { SQLStatement } from 'sql-template-strings';
 import { Pool } from 'pg';
 import { db_co } from 'src/util/env';
 
@@ -10,9 +11,9 @@ const db = new Pool({
 });
 
 interface DatabaseQuery {
-  query_string: string;
-  query_params?: string[];
-  query_rows?: 'one' | 'all';
+  query: SQLStatement;
+  params?: string[];
+  rows?: 'one' | 'all';
 }
 
 /**
@@ -36,13 +37,13 @@ interface DatabaseQuery {
  * 'query_string' is required.
  */
 export async function dbq<T>({
-  query_string,
-  query_params,
-  query_rows,
+  query: query_string,
+  params: params,
+  rows: rows,
 }: DatabaseQuery): Promise<T> {
-  if (!query_params) query_params = [];
-  if (!query_rows) query_rows = 'one';
+  if (!params) params = [];
+  if (!rows) rows = 'one';
   return (await db
-    .query(query_string, query_params)
-    .then(({ rows }) => (query_rows === 'all' ? rows : rows[0]))) as T;
+    .query(query_string, params)
+    .then(({ rows: qrows }) => (rows === 'all' ? qrows : qrows[0]))) as T;
 }

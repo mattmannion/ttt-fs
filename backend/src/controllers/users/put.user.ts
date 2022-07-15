@@ -21,8 +21,8 @@ export async function PutUser({ body, session }: Request, res: Response) {
     }
 
     const user_check = await dbq<UsersModel>({
-      query_string: check_username_and_email_query,
-      query_params: [username!, email],
+      query: check_username_and_email_query,
+      params: [username!, email],
     });
 
     if (!user_check) {
@@ -33,8 +33,8 @@ export async function PutUser({ body, session }: Request, res: Response) {
     }
 
     const user = await dbq<UsersModel>({
-      query_string: get_user_query,
-      query_params: [user_check.id.toString()],
+      query: get_user_query,
+      params: [user_check.id.toString()],
     });
 
     firstname = firstname ? firstname : user.firstname;
@@ -42,8 +42,8 @@ export async function PutUser({ body, session }: Request, res: Response) {
     password = password ? password : user.password;
 
     await dbq<UsersModel>({
-      query_string: put_user_query,
-      query_params: [user_check.id.toString(), firstname, lastname, password],
+      query: put_user_query,
+      params: [user_check.id.toString(), firstname, lastname, password],
     });
 
     res.status(200).json({

@@ -1,5 +1,9 @@
 import glob from 'glob';
+import SQL from 'sql-template-strings';
 import { cfg } from 'src/util/env';
+
+/** allows for correct casing to work with vscode plugin */
+export const sql = SQL;
 
 /** the default property comes from the export default convention */
 interface Default<T> {

@@ -5,8 +5,8 @@ import { get_users_query } from 'src/db/sql/users.sql';
 
 export async function GetUsers(_req: Request, res: Response) {
   const users = await dbq<UsersModel[]>({
-    query_string: get_users_query,
-    query_rows: 'all',
+    query: get_users_query,
+    rows: 'all',
   });
 
   res.status(200).json({

@@ -21,8 +21,8 @@ export async function DeleteUser({ body, session }: Request, res: Response) {
     }
 
     const user_check = await dbq<UsersModel>({
-      query_string: check_username_and_email_query,
-      query_params: [username!, email],
+      query: check_username_and_email_query,
+      params: [username!, email],
     });
 
     if (!user_check) {
@@ -33,8 +33,8 @@ export async function DeleteUser({ body, session }: Request, res: Response) {
     }
 
     const user = await dbq<UsersModel>({
-      query_string: delete_user_query,
-      query_params: [user_check.id.toString()],
+      query: delete_user_query,
+      params: [user_check.id.toString()],
     });
 
     res.status(200).json({
