@@ -20,6 +20,7 @@ describe('/Users Test Suite', () => {
       await user.post(cfg.ep.login).send({ username: 'mm', password: 'mm' });
 
       const res = await user.delete(cfg.ep.users);
+
       expect(res.statusCode).toEqual(400);
     });
 
@@ -30,6 +31,7 @@ describe('/Users Test Suite', () => {
       const res = await user
         .delete(cfg.ep.users)
         .send({ email: 'mgr@mgr.com' });
+
       expect(res.statusCode).toEqual(404);
     });
 
@@ -42,7 +44,7 @@ describe('/Users Test Suite', () => {
 
       await dbq({
         query: util_replace_user_query,
-        params: [await bc.hash('kr', cfg.bcrypt.salt)],
+        params: [await bc.hash('kr', cfg.bcrypt.test)],
       });
     });
   });
@@ -60,11 +62,13 @@ describe('/Users Test Suite', () => {
   describe('Get One User', () => {
     it('should get one user', async () => {
       const res = await supertest(app).get(cfg.ep.users + '/1');
+
       expect(JSON.parse(res.text)).toBeInstanceOf(Object);
     });
 
     it('should find no users', async () => {
       const res = await supertest(app).get(cfg.ep.users + '/0');
+
       expect(JSON.parse(res.text)).toStrictEqual({
         status: 'failure',
         msg: 'User not found...',
@@ -76,6 +80,7 @@ describe('/Users Test Suite', () => {
     it('should get all users', async () => {
       const res = await supertest(app).get(cfg.ep.users);
       const { users } = JSON.parse(res.text);
+
       expect(users).toBeInstanceOf(Array);
     });
   });
@@ -89,6 +94,7 @@ describe('/Users Test Suite', () => {
         username: 'mm',
         password: 'mm',
       });
+
       expect(JSON.parse(res.text)).toBeInstanceOf(Object);
       expect(res.status).toEqual(400);
     });
@@ -101,6 +107,7 @@ describe('/Users Test Suite', () => {
         username: 'mm',
         password: 'mm',
       });
+
       expect(JSON.parse(res.text)).toBeInstanceOf(Object);
       expect(res.status).toEqual(403);
     });
@@ -113,8 +120,10 @@ describe('/Users Test Suite', () => {
         username: 'dt',
         password: 'dt',
       });
+
       expect(JSON.parse(res.text)).toBeInstanceOf(Object);
       expect(res.status).toEqual(200);
+
       await dbq({ query: util_delete_user_query });
     });
   });
@@ -125,6 +134,7 @@ describe('/Users Test Suite', () => {
       await user.post(cfg.ep.login).send({ username: 'mm', password: 'mm' });
 
       const res = await user.put(cfg.ep.users);
+
       expect(JSON.parse(res.text)).toEqual({ msg: 'Must enter a email...' });
       expect(res.statusCode).toEqual(403);
     });
@@ -134,6 +144,7 @@ describe('/Users Test Suite', () => {
       await user.post(cfg.ep.login).send({ username: 'mm', password: 'mm' });
 
       const res = await user.put(cfg.ep.users).send({ email: 'mgr@mgr.com' });
+
       expect(JSON.parse(res.text)).toEqual({
         msg: 'Email must match Username...',
       });
@@ -158,6 +169,7 @@ describe('/Users Test Suite', () => {
         lastname: 'mannion',
         password: 'mm',
       });
+
       expect(res.statusCode).toEqual(204);
     });
   });
