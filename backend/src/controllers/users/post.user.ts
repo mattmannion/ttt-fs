@@ -7,8 +7,6 @@ import {
 } from 'src/db/sql/users.sql';
 
 export async function PostUser({ body }: Request, res: Response) {
-  // todo check for existing username
-
   let { firstname, lastname, email, username, password } = body;
 
   // end request if body values are empty/null
@@ -25,7 +23,7 @@ export async function PostUser({ body }: Request, res: Response) {
   });
 
   if (user_check) {
-    res.status(400).json({
+    res.status(403).json({
       msg: 'Username or Email already exists...',
     });
     return;

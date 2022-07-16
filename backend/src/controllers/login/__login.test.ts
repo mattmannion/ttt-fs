@@ -4,6 +4,7 @@ import { app } from 'src/server';
 import supertest from 'supertest';
 
 // const ep = '/login';
+jest.setTimeout(500);
 
 describe('Login test suite', () => {
   describe('Delete Suite', () => {

@@ -12,7 +12,7 @@ export async function PutUser({ body, session }: Request, res: Response) {
   const { username } = session;
 
   if (!email) {
-    res.status(400).json({
+    res.status(403).json({
       msg: 'Must enter a email...',
     });
     return;
@@ -24,7 +24,7 @@ export async function PutUser({ body, session }: Request, res: Response) {
   });
 
   if (!user_check) {
-    res.status(404).json({
+    res.status(403).json({
       msg: 'Email must match Username...',
     });
     return;
@@ -44,7 +44,7 @@ export async function PutUser({ body, session }: Request, res: Response) {
     params: [user_check.id.toString(), firstname, lastname, password],
   });
 
-  res.status(200).json({
+  res.status(204).json({
     msg: `User ${user.username} has been updated.`,
     status: 'success',
   });

@@ -6,6 +6,8 @@ import { Router } from 'express';
 import { GlobImport, InternalError, time_stamp } from 'src/util/util';
 import users_router from 'src/routes/routers/users.router';
 
+jest.setTimeout(500);
+
 const MockError: unknown = {
   message: 'Mock Error Messge',
 };

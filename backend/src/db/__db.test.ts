@@ -2,6 +2,8 @@ import { dbq } from 'src/db/db';
 import { get_user_query, get_users_query } from 'src/db/sql/users.sql';
 import type { UsersModel } from 'src/db/models/Users.model';
 
+jest.setTimeout(500);
+
 describe('checks the return types from the database', () => {
   it('should return an array', async () => {
     expect(

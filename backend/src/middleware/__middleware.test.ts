@@ -3,6 +3,8 @@ import { app } from 'src/server';
 import { req, resp, next } from 'src/__mocks__/express.mock';
 import supertest from 'supertest';
 
+jest.setTimeout(500);
+
 describe('Middleware Test Suite', () => {
   describe('Cors Middleware', () => {
     it('tests cors whitelist success', async () => {

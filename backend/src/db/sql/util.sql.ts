@@ -28,3 +28,7 @@ insert into users(
 )
 values ('khris', 'rhodes', 'kr@kr.com', 'kr', 'kr');
 `;
+
+export const util_delete_user_query = sql`
+delete from users where email = 'dt@dt.com';
+`;
