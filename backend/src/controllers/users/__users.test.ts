@@ -41,7 +41,6 @@ describe('/Users Test Suite', () => {
       await user.post(l).send({ username: 'mm', password: 'mm' });
 
       const res = await user.get('/profile');
-      console.log(res.text);
       expect(res.statusCode).toEqual(200);
     });
   });
