@@ -7,6 +7,7 @@ import {
   put_user_query,
 } from 'src/db/sql/users.sql';
 import bcrypt from 'bcryptjs';
+import { cfg } from 'src/util/env';
 
 export async function PutUser({ body, session }: Request, res: Response) {
   let { firstname, lastname, email, password } = body;
@@ -39,7 +40,7 @@ export async function PutUser({ body, session }: Request, res: Response) {
   firstname = firstname ? firstname : user.firstname;
   lastname = lastname ? lastname : user.lastname;
 
-  if (password) password = await bcrypt.hash(password, 12);
+  if (password) password = await bcrypt.hash(password, cfg.bcrypt.salt);
   else password = user.password;
 
   await dbq<UsersModel>({

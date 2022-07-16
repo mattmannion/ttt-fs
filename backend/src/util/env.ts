@@ -33,6 +33,10 @@ export const cfg = {
     login: '/login',
     profile: '/profile',
   },
+  bcrypt: {
+    salt: 12,
+    test: 1,
+  },
 };
 
 export const db_co: PostgresConnectionOptions = {

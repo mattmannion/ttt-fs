@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { models } from 'src/db/models';
-import { db_co, prod } from 'src/util/env';
+import { cfg, db_co, prod } from 'src/util/env';
 import { dbq } from 'src/db/db';
 import {
   util_alter_tables_query,
@@ -36,9 +36,9 @@ export async function TypeOrmPGInit() {
    */
 
   const passwords = [
-    await bcrypt.hash('mm', 2),
-    await bcrypt.hash('mgr', 2),
-    await bcrypt.hash('kr', 2),
+    await bcrypt.hash('mm', cfg.bcrypt.test),
+    await bcrypt.hash('mgr', cfg.bcrypt.test),
+    await bcrypt.hash('kr', cfg.bcrypt.test),
   ];
 
   // resets and seeds tables as needed for repeatable testing

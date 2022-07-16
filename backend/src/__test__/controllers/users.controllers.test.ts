@@ -42,7 +42,7 @@ describe('/Users Test Suite', () => {
 
       await dbq({
         query: util_replace_user_query,
-        params: [await bcrypt.hash('kr', 12)],
+        params: [await bcrypt.hash('kr', cfg.bcrypt.salt)],
       });
     });
   });
