@@ -53,17 +53,24 @@ describe('Login test suite', () => {
         expect(res.status).toEqual(202);
       });
     });
+  });
+  describe('get login integration testing', () => {
+    it('returns postive login message', async () => {
+      const user = supertest.agent(app);
 
-    // describe('Post Login testing', () => {
-    //   it('must return status 400 if any field is empty', async () => {
-    //     const user = supertest(app);
-    //     const res = await user
-    //       .post('/login')
-    //       .send({ username: 'smackgr', password: 'smackpass' });
-    //     await user.get('/login');
+      await user.post('/login').send({ username: 'mm', password: 'mm' });
+      const res = await user.get('/login');
+      const { status } = JSON.parse(res.text);
+      expect(status).toEqual('you are logged in');
+    });
 
-    //     expect(res.status).toEqual(200);
-    //   });
-    // });
+    it('returns negative login message', async () => {
+      const user = supertest.agent(app);
+
+      await user.post('/login').send({});
+      const res = await user.get('/login');
+      const { status } = JSON.parse(res.text);
+      expect(status).toEqual('you are not logged in');
+    });
   });
 });
