@@ -8,7 +8,7 @@ import {
   util_insert_users_query,
   util_truncate_tables_query,
 } from 'src/db/sql/util.sql';
-import bcrypt from 'bcryptjs';
+import bc from 'bcryptjs';
 
 /**
  * TypeOrmPGInit will run at server boot.
@@ -36,9 +36,9 @@ export async function TypeOrmPGInit() {
    */
 
   const passwords = [
-    await bcrypt.hash('mm', cfg.bcrypt.test),
-    await bcrypt.hash('mgr', cfg.bcrypt.test),
-    await bcrypt.hash('kr', cfg.bcrypt.test),
+    await bc.hash('mm', cfg.bcrypt.test),
+    await bc.hash('mgr', cfg.bcrypt.test),
+    await bc.hash('kr', cfg.bcrypt.test),
   ];
 
   // resets and seeds tables as needed for repeatable testing

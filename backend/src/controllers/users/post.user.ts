@@ -5,7 +5,7 @@ import {
   check_username_or_email_query,
   post_user_query,
 } from 'src/db/sql/users.sql';
-import bcrypt from 'bcryptjs';
+import bc from 'bcryptjs';
 import { cfg } from 'src/util/env';
 
 export async function PostUser({ body }: Request, res: Response) {
@@ -31,7 +31,7 @@ export async function PostUser({ body }: Request, res: Response) {
     return;
   }
 
-  const hashed_password = await bcrypt.hash(password, cfg.bcrypt.salt);
+  const hashed_password = await bc.hash(password, cfg.bcrypt.salt);
 
   const user = await dbq<UsersModel>({
     query: post_user_query,

@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 import type { UsersModel } from 'src/db/models/Users.model';
 import { dbq } from 'src/db/db';
 import { login_query } from 'src/db/sql/authentication.sql';
-import bcrypt from 'bcryptjs';
+import bc from 'bcryptjs';
 
 export async function PostLogin({ body, session }: Request, res: Response) {
   const { username, password } = body;
@@ -28,7 +28,7 @@ export async function PostLogin({ body, session }: Request, res: Response) {
     return;
   }
 
-  const auth = await bcrypt.compare(password, user.password);
+  const auth = await bc.compare(password, user.password);
 
   if (!auth) {
     res.status(206).json({

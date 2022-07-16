@@ -5,7 +5,7 @@ import {
 } from 'src/db/sql/util.sql';
 import { app } from 'src/server';
 import supertest from 'supertest';
-import bcrypt from 'bcryptjs';
+import bc from 'bcryptjs';
 import { sleep } from 'src/util/util';
 import { cfg } from 'src/util/env';
 
@@ -42,7 +42,7 @@ describe('/Users Test Suite', () => {
 
       await dbq({
         query: util_replace_user_query,
-        params: [await bcrypt.hash('kr', cfg.bcrypt.salt)],
+        params: [await bc.hash('kr', cfg.bcrypt.salt)],
       });
     });
   });
