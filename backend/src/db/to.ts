@@ -1,12 +1,12 @@
 import 'reflect-metadata';
-import { models } from 'src/db/models';
 import { DataSource } from 'typeorm';
+import { models } from 'src/db/models';
 import { db_co, prod } from 'src/util/env';
 import { dbq } from 'src/db/db';
 import {
-  testing_drop_users_query,
-  testing_insert_users_query,
-} from 'src/db/sql/testing.sql';
+  util_drop_users_query,
+  util_insert_users_query,
+} from 'src/db/sql/util.sql';
 
 /**
  * TypeOrmPGInit will run at server boot.
@@ -16,16 +16,14 @@ import {
  * to restablish a new connection to
  * the postgres database - preventing error.
  */
-export async function TypeOrmPGInit(init: boolean) {
+export async function TypeOrmPGInit() {
   const DS = new DataSource({
     ...db_co,
     entities: await models,
   });
 
-  if (init) {
-    await DS.initialize();
-    await DS.synchronize();
-  }
+  await DS.initialize();
+  await DS.synchronize();
 
   // exits init preserving existing data
   if (prod) return;
@@ -36,15 +34,15 @@ export async function TypeOrmPGInit(init: boolean) {
    */
 
   // drops and seeds tables as needed for repeatable testing
-  await dbq({ query: testing_drop_users_query });
+  await dbq({ query: util_drop_users_query });
 
   // recreates dropped tables
   await DS.synchronize();
 
   // inserts data
-  await dbq({ query: testing_insert_users_query });
+  await dbq({ query: util_insert_users_query });
 
-  if (init) console.log('db connected');
+  console.log('db connected');
   console.log('db seeded');
   return;
 }
