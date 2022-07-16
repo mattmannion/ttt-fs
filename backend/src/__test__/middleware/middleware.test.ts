@@ -1,9 +1,11 @@
 import { check_auth } from 'src/middleware/auth/check_auth';
 import { app } from 'src/server';
+import { cfg } from 'src/util/env';
+import { sleep } from 'src/util/util';
 import { req, resp, next } from 'src/__mocks__/express.mock';
 import supertest from 'supertest';
 
-jest.setTimeout(500);
+(async () => sleep(cfg.jest.sleep))();
 
 describe('Middleware Test Suite', () => {
   describe('Cors Middleware', () => {

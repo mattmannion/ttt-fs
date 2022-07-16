@@ -7,14 +7,13 @@ import { TypeOrmPGInit } from 'src/db/to';
 
 (async () => {
   try {
-    console.log('redis connected');
     await TypeOrmPGInit();
+    if (!prod) app.use(ep_log);
+    console.log('redis connected');
+    app.listen(cfg.server.port, () =>
+      console.log('live @ ' + cfg.server.path + cfg.server.port)
+    );
   } catch (error) {
     console.log((<Error>error).message);
   }
 })();
-
-if (!prod) app.use(ep_log);
-app.listen(cfg.server.port, () =>
-  console.log('live @ ' + cfg.server.path + cfg.server.port)
-);

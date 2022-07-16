@@ -5,6 +5,7 @@ import {
   check_username_or_email_query,
   post_user_query,
 } from 'src/db/sql/users.sql';
+import bcrypt from 'bcryptjs';
 
 export async function PostUser({ body }: Request, res: Response) {
   let { firstname, lastname, email, username, password } = body;
@@ -29,9 +30,11 @@ export async function PostUser({ body }: Request, res: Response) {
     return;
   }
 
+  const hashed_password = await bcrypt.hash(password, 12);
+
   const user = await dbq<UsersModel>({
     query: post_user_query,
-    params: [firstname, lastname, email, username, password],
+    params: [firstname, lastname, email, username, hashed_password],
   });
 
   res.status(200).json({

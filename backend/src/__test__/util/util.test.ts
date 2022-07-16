@@ -1,12 +1,12 @@
 // process.env.NODE_ENV = 'prod' must
 // be before the import statement
 process.env.NODE_ENV = 'prod';
-import { prod } from 'src/util/env';
+import { cfg, prod } from 'src/util/env';
 import { Router } from 'express';
-import { GlobImport, InternalError, time_stamp } from 'src/util/util';
+import { GlobImport, InternalError, sleep, time_stamp } from 'src/util/util';
 import users_router from 'src/routes/routers/users.router';
 
-jest.setTimeout(500);
+(async () => sleep(cfg.jest.sleep))();
 
 const MockError: unknown = {
   message: 'Mock Error Messge',

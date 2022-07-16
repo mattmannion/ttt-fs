@@ -5,6 +5,10 @@ import { cfg } from 'src/util/env';
 /** allows for correct casing to work with vscode plugin */
 export const sql = SQL;
 
+/** puts operation to sleep for x milis */
+export const sleep = (sec: number) =>
+  new Promise((res) => setTimeout(res, sec));
+
 /** the default property comes from the export default convention */
 interface Default<T> {
   default: T;

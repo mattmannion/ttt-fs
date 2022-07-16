@@ -25,6 +25,14 @@ export const cfg = {
   cors: {
     whitelist: new Set([env.WL_1!, env.WL_2!, undefined]),
   },
+  jest: {
+    sleep: 2000,
+  },
+  ep: {
+    users: '/users',
+    login: '/login',
+    profile: '/profile',
+  },
 };
 
 export const db_co: PostgresConnectionOptions = {

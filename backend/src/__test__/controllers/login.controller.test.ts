@@ -2,9 +2,10 @@ import { req, resp } from 'src/__mocks__/express.mock';
 import { Logout } from 'src/controllers/login/delete.login';
 import { app } from 'src/server';
 import supertest from 'supertest';
+import { sleep } from 'src/util/util';
+import { cfg } from 'src/util/env';
 
-// const ep = '/login';
-jest.setTimeout(500);
+(async () => sleep(cfg.jest.sleep))();
 
 describe('Login test suite', () => {
   describe('Delete Suite', () => {
@@ -31,46 +32,58 @@ describe('Login test suite', () => {
     });
   });
 
-  describe('login integration testing', () => {
-    describe('Post Login testing', () => {
-      it('must return status 400 if any field is empty', async () => {
-        const res = await supertest(app).post('/login').send({});
+  describe('Post Login testing', () => {
+    it('must return status 400 if any field is empty', async () => {
+      const res = await supertest(app).post(cfg.ep.login);
 
-        expect(res.status).toEqual(400);
-      });
-      it('must return status 200 if any field is empty', async () => {
-        const res = await supertest(app)
-          .post('/login')
-          .send({ username: 'mm', password: 'mm' });
+      expect(res.status).toEqual(400);
+    });
 
-        expect(res.status).toEqual(200);
-      });
-      it('must return status 202 if any field is empty', async () => {
-        const res = await supertest
-          .agent(app)
-          .post('/login')
-          .send({ username: 'smackgr', password: 'smackdsadasdpass' });
+    it('must return status 206 if Username is wrong', async () => {
+      const res = await supertest
+        .agent(app)
+        .post(cfg.ep.login)
+        .send({ username: 'smackgr', password: 'smackdsadasdpass' });
 
-        expect(res.status).toEqual(202);
-      });
+      expect(res.status).toEqual(206);
+    });
+
+    it('must return status 206 if Password is wrong', async () => {
+      const res = await supertest
+        .agent(app)
+        .post(cfg.ep.login)
+        .send({ username: 'mm', password: 'smackdsadasdpass' });
+
+      expect(res.status).toEqual(206);
+    });
+
+    it('must return status 200 logs in', async () => {
+      const res = await supertest(app)
+        .post(cfg.ep.login)
+        .send({ username: 'mm', password: 'mm' });
+
+      expect(res.status).toEqual(200);
     });
   });
+
   describe('get login integration testing', () => {
     it('returns postive login message', async () => {
       const user = supertest.agent(app);
 
-      await user.post('/login').send({ username: 'mm', password: 'mm' });
-      const res = await user.get('/login');
+      await user.post(cfg.ep.login).send({ username: 'mm', password: 'mm' });
+      const res = await user.get(cfg.ep.login);
       const { status } = JSON.parse(res.text);
+
       expect(status).toEqual('you are logged in');
     });
 
     it('returns negative login message', async () => {
       const user = supertest.agent(app);
 
-      await user.post('/login').send({});
-      const res = await user.get('/login');
+      await user.post(cfg.ep.login).send({});
+      const res = await user.get(cfg.ep.login);
       const { status } = JSON.parse(res.text);
+
       expect(status).toEqual('you are not logged in');
     });
   });

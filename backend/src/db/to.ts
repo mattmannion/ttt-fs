@@ -4,9 +4,11 @@ import { models } from 'src/db/models';
 import { db_co, prod } from 'src/util/env';
 import { dbq } from 'src/db/db';
 import {
-  util_drop_users_query,
+  util_alter_tables_query,
   util_insert_users_query,
+  util_truncate_tables_query,
 } from 'src/db/sql/util.sql';
+import bcrypt from 'bcryptjs';
 
 /**
  * TypeOrmPGInit will run at server boot.
@@ -33,14 +35,18 @@ export async function TypeOrmPGInit() {
    * all data in the tables dropped below will be lost
    */
 
-  // drops and seeds tables as needed for repeatable testing
-  await dbq({ query: util_drop_users_query });
+  const passwords = [
+    await bcrypt.hash('mm', 2),
+    await bcrypt.hash('mgr', 2),
+    await bcrypt.hash('kr', 2),
+  ];
 
-  // recreates dropped tables
-  await DS.synchronize();
+  // resets and seeds tables as needed for repeatable testing
+  await dbq({ query: util_truncate_tables_query });
+  await dbq({ query: util_alter_tables_query });
 
   // inserts data
-  await dbq({ query: util_insert_users_query });
+  await dbq({ query: util_insert_users_query, params: passwords });
 
   console.log('db connected');
   console.log('db seeded');

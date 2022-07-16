@@ -6,6 +6,7 @@ import {
   get_user_query,
   put_user_query,
 } from 'src/db/sql/users.sql';
+import bcrypt from 'bcryptjs';
 
 export async function PutUser({ body, session }: Request, res: Response) {
   let { firstname, lastname, email, password } = body;
@@ -37,7 +38,9 @@ export async function PutUser({ body, session }: Request, res: Response) {
 
   firstname = firstname ? firstname : user.firstname;
   lastname = lastname ? lastname : user.lastname;
-  password = password ? password : user.password;
+
+  if (password) password = await bcrypt.hash(password, 12);
+  else password = user.password;
 
   await dbq<UsersModel>({
     query: put_user_query,

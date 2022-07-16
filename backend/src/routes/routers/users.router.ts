@@ -6,20 +6,21 @@ import { GetUser } from 'src/controllers/users/get.user';
 import { PostUser } from 'src/controllers/users/post.user';
 import { PutUser } from 'src/controllers/users/put.user';
 import { DeleteUser } from 'src/controllers/users/delete.user';
+import { cfg } from 'src/util/env';
 
 const users_router = Router();
 
-users_router.route('/users/:id').get(GetUser);
+users_router.route(cfg.ep.users + '/:id').get(GetUser);
 
-users_router.route('/users').get(GetUsers).post(PostUser);
+users_router.route(cfg.ep.users).get(GetUsers).post(PostUser);
 
 users_router
   .use(check_auth)
-  .route('/users')
+  .route(cfg.ep.users)
   .put(PutUser)
   .patch(PutUser)
   .delete(DeleteUser);
 
-users_router.use(check_auth).route('/profile').get(GetProfile);
+users_router.use(check_auth).route(cfg.ep.profile).get(GetProfile);
 
 export default users_router;

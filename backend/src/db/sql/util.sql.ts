@@ -1,7 +1,11 @@
 import { sql } from 'src/util/util';
 
-export const util_drop_users_query = sql`
-drop table users;
+export const util_truncate_tables_query = sql`
+truncate users;
+`;
+
+export const util_alter_tables_query = sql`
+alter sequence users_id_seq restart; 
 `;
 
 export const util_insert_users_query = sql`
@@ -13,9 +17,9 @@ insert into users(
   password         
 )
 values
-('matt', 'mannion', 'mm@mm.com', 'mm', 'mm'),
-('mack', 'gr', 'mgr@mgr.com', 'mgr', 'mgr'),
-('khris', 'rhodes', 'kr@kr.com', 'kr', 'kr');
+('matt', 'mannion', 'mm@mm.com', 'mm', $1),
+('mack', 'gr', 'mgr@mgr.com', 'mgr', $2),
+('khris', 'rhodes', 'kr@kr.com', 'kr', $3);
 `;
 
 export const util_replace_user_query = sql`
@@ -26,7 +30,7 @@ insert into users(
   username,        
   password         
 )
-values ('khris', 'rhodes', 'kr@kr.com', 'kr', 'kr');
+values ('khris', 'rhodes', 'kr@kr.com', 'kr', $1);
 `;
 
 export const util_delete_user_query = sql`
