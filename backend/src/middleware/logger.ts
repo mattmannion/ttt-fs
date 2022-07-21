@@ -14,6 +14,7 @@ export function ep_log(
   next: NextFunction,
   on: boolean
 ) {
+  // turns the logger on or off based by passing a boolean in
   if (on)
     console.log(`${time_stamp()} - ${path} - ${method.toLocaleUpperCase()} `);
   next();

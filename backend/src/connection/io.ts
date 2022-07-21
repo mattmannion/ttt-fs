@@ -3,18 +3,23 @@ import { app } from 'src/server';
 
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { GlobImport } from 'src/util/util';
 
-const server = createServer(app);
+export const server = createServer(app);
 
-const io = new Server(server, {
+export const io = new Server(server, {
   cors: {
     origin: <string[]>[...cfg.cors.whitelist],
     credentials: true,
   },
 });
 
-io.on('connection', (socket) => {
-  socket.emit('gamers', 'hello');
-});
+// collects all emits in events and executes here
+(async () => {
+  const events = GlobImport({
+    path: '/connection/events',
+    file_ext: '.event.*',
+  });
 
-export { io, server };
+  await events;
+})();
