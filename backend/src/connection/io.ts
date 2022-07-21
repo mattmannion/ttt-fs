@@ -23,3 +23,33 @@ export const io = new Server(server, {
 
   await events;
 })();
+
+export const ws: {
+  on: {
+    connect: 'connect';
+    disconnect: 'disconnect';
+  };
+  socket: {
+    on: {
+      msg: 'msg';
+    };
+    emit: {
+      gamers: 'gamers';
+      msg: 'msg';
+    };
+  };
+} = {
+  on: {
+    connect: 'connect',
+    disconnect: 'disconnect',
+  },
+  socket: {
+    on: {
+      msg: 'msg',
+    },
+    emit: {
+      gamers: 'gamers',
+      msg: 'msg',
+    },
+  },
+};
