@@ -1,6 +1,5 @@
 import { cfg } from 'src/util/env';
 import { app } from 'src/server';
-
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { GlobImport } from 'src/util/util';
@@ -23,3 +22,33 @@ export const io = new Server(server, {
 
   await events;
 })();
+
+export const ws: {
+  on: {
+    connect: 'connect';
+    disconnect: 'disconnect';
+  };
+  socket: {
+    on: {
+      msg: 'msg';
+    };
+    emit: {
+      gamers: 'gamers';
+      msg: 'msg';
+    };
+  };
+} = {
+  on: {
+    connect: 'connect',
+    disconnect: 'disconnect',
+  },
+  socket: {
+    on: {
+      msg: 'msg',
+    },
+    emit: {
+      gamers: 'gamers',
+      msg: 'msg',
+    },
+  },
+};
