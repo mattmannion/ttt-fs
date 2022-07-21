@@ -19,7 +19,7 @@ interface GlobImport {
   file_ext?: string;
 }
 
-/** creates array of imports based on path and optional file extention [*.ts] */
+/** creates array of imports based on path and optional file extention [*.(j|t)s] */
 export async function GlobImport<T>({
   path,
   file_ext,
@@ -59,6 +59,6 @@ export function InternalError(error: unknown) {
 }
 
 export function time_stamp(): string {
-  const t = new Date();
-  return `>> ${t.getHours()}:${t.getMinutes()}:${t.getSeconds()}`;
+  const d = new Date();
+  return `>> ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
 }
