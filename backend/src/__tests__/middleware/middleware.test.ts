@@ -1,5 +1,5 @@
-process.env.NODE_ENV = 'test';
 import { check_auth } from 'src/middleware/auth/check_auth';
+import { ep_log } from 'src/middleware/logger';
 import { app } from 'src/server';
 import { cfg } from 'src/util/env';
 import { sleep } from 'src/util/util';
@@ -11,7 +11,9 @@ import supertest from 'supertest';
 describe('Middleware Test Suite', () => {
   describe('Cors Middleware', () => {
     it('tests cors whitelist success', async () => {
-      const res = await supertest(app).get('/users');
+      const res = await supertest(app)
+        .get('/users')
+        .set('Origin', 'http://localhost:7890');
 
       expect(res.status).toStrictEqual(200);
     });
@@ -32,14 +34,32 @@ describe('Middleware Test Suite', () => {
     it('should call the next when data is set', () => {
       const res = resp();
       req.session.username = 'mm';
+
       check_auth(req, res, next);
-      expect(next).toBeCalledTimes(1);
+      expect(next).toBeCalled();
     });
 
     it('should 401 if session data is not set', () => {
       const res = resp();
+
       check_auth(req, res, next);
       expect(res.status).toHaveBeenCalledWith(401);
+    });
+  });
+
+  describe('End Point Logger', () => {
+    it('should run the logger if false', () => {
+      const res = resp();
+
+      ep_log(req, res, next, false);
+      expect(next).toBeCalled();
+    });
+
+    it('should run the logger if true', () => {
+      const res = resp();
+
+      ep_log(req, res, next, true);
+      expect(next).toBeCalled();
     });
   });
 });

@@ -11,9 +11,11 @@ import { time_stamp } from 'src/util/util';
 export function ep_log(
   { path, method }: Request,
   _res: Response,
-  next: NextFunction
+  next: NextFunction,
+  on: boolean
 ) {
-  console.log(`${time_stamp()} - ${path} - ${method.toLocaleUpperCase()} `);
+  if (on)
+    console.log(`${time_stamp()} - ${path} - ${method.toLocaleUpperCase()} `);
   next();
 }
 

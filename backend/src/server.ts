@@ -24,7 +24,7 @@ app.use(mw_cors);
 
 app.use(json());
 
-if (!(prod || env_test)) app.use(ep_log);
+app.use((req, res, next) => ep_log(req, res, next, !(prod || env_test)));
 
 (async () => {
   app.use(...(await router));
