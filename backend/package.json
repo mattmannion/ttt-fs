@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest --coverage --watchAll --detectOpenHandles ./src",
+    "t": "jest --coverage --watchAll --detectOpenHandles ./src",
     "ts": "tsc -w",
     "rf": "rimraf dist/*",
-    "mon": "nodemon dist/index.js",
-    "dev": "run-p rf ts",
+    "d": "run-p rf ts",
+    "m": "nodemon dist/index.js",
     "stage": "rimraf dist/* && tsc && TYPEORM_LOGGING=false TYPEORM_HOST=localhost NODE_ENV=dev node dist/index.js",
     "start": "rimraf dist/* && tsc && NODE_ENV=prod node dist/index.js"
   },
