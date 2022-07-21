@@ -1,0 +1,23 @@
+{
+  "name": "ttt",
+  "version": "1.0.0",
+  "description": "fullstack tic tac toe game",
+  "scripts": {
+    "bt": "cmd/be-test.sh",
+    "bd": "cmd/be-dev.sh",
+    "bm": "cmd/be-mon.sh",
+    "fd": "cmd/fe-dev.sh",
+    "fb": "cmd/fe-build-run.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattmannion/ttt-fs.git"
+  },
+  "keywords": [],
+  "author": "Matt Mannion",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mattmannion/ttt-fs/issues"
+  },
+  "homepage": "https://github.com/mattmannion/ttt-fs#readme"
+}

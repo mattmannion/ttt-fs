@@ -9,3 +9,5 @@ frontend/yarn-error.log
 node_modules
 
 pgdata
+
+yarn.lock
