@@ -1,5 +1,3 @@
-// process.env.NODE_ENV = 'prod' must
-// be before the import statement
 process.env.NODE_ENV = 'prod';
 import { cfg, prod } from 'src/util/env';
 import { Router } from 'express';

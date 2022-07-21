@@ -1,6 +1,8 @@
-import type { NextFunction, Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 
 export const req = <Request>{
+  method: 'TEST',
+  path: '/test-route',
   session: {
     username: undefined,
     destroy(fn: (err: any) => void) {

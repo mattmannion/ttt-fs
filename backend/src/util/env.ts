@@ -5,7 +5,11 @@ config();
 
 const { env } = process;
 
+/** sets application variables into prod or dev */
 export const prod = env.NODE_ENV === 'prod' ? true : false;
+
+/** configures certain features to work in testing or not  */
+export const env_test = env.NODE_ENV === 'test';
 
 export const cfg = {
   rootdir: __dirname + '/..',
