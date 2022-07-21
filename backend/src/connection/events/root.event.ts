@@ -9,9 +9,6 @@ let state = {
 io.on(ws.on.connect, (s) => {
   console.log('connection');
 
-  // io.emit(ws.socket.emit.gamers, state.msg);
-  // s.broadcast.emit(ws.socket.emit.gamers, state.msg);
-
   s.on(ws.socket.on.msg, (msg: string) => {
     state.msg = msg;
     io.emit(ws.socket.emit.gamers, state.msg + ' ' + state.counter++);
@@ -21,10 +18,3 @@ io.on(ws.on.connect, (s) => {
     console.log('connection lost');
   });
 });
-//
-// io.on(ws.socket.emit.msg, (msg: string) => {
-//   state.msg = msg;
-//   console.log('msg', state.msg + ' ' + state.counter++);
-// });
-
-// io.emit(ws.socket.emit.msg, state.msg);
