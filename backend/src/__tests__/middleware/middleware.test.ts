@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 import { check_auth } from 'src/middleware/auth/check_auth';
 import { app } from 'src/server';
 import { cfg } from 'src/util/env';

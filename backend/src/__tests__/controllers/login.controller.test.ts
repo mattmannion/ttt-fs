@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 import { req, resp } from 'src/__mocks__/express.mock';
 import { Logout } from 'src/controllers/login/delete.login';
 import { app } from 'src/server';

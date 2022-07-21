@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 import { dbq } from 'src/db/db';
 import {
   util_delete_user_query,

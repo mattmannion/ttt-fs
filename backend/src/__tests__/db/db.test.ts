@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test';
 import { dbq } from 'src/db/db';
 import { get_user_query, get_users_query } from 'src/db/sql/users.sql';
 import type { UsersModel } from 'src/db/models/Users.model';
