@@ -17,14 +17,14 @@ io.on(ws.on.connect, (s) => {
     io.emit(ws.socket.emit.gamers, { msg: 'gamers', room: state.room });
   });
 
-  s.on(ws.socket.on.msg, (msg: string) => {
-    state.msg = msg;
+  // s.on(ws.socket.on.msg, (msg: string) => {
+  //   state.msg = msg;
 
-    // io.emit(ws.socket.emit.gamers, {
-    //   msg: state.msg + ' ' + state.counter++,
-    //   room: state.room,
-    // });
-  });
+  //   io.emit(ws.socket.emit.msg, {
+  //     msg: state.msg + ' ' + state.counter++,
+  //     room: state.room,
+  //   });
+  // });
 
   s.on('room', (room) => {
     s.join(room);

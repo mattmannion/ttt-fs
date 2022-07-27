@@ -27,7 +27,7 @@ export const cfg = {
     secret: env.SESSION_SECRET!,
   },
   cors: {
-    whitelist: new Set([env.WL_1!, env.WL_2!, undefined]),
+    whitelist: [env.WL_1!, env.WL_2!, undefined],
   },
   jest: {
     sleep: 2000,
