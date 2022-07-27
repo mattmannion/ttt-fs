@@ -30,6 +30,7 @@ export const ws: {
   };
   socket: {
     on: {
+      gamers: 'gamers';
       msg: 'msg';
     };
     emit: {
@@ -44,6 +45,7 @@ export const ws: {
   },
   socket: {
     on: {
+      gamers: 'gamers',
       msg: 'msg',
     },
     emit: {

@@ -2,16 +2,27 @@ import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
 const socket = io('ws://localhost:7890');
+socket.emit('gamers');
+
 export default function Home() {
   const [msg, setMsg] = useState<string>('loading');
+  const [room, setRoom] = useState<string>('loading');
 
   useEffect(() => {
-    socket.on('gamers', (arg) => {
-      console.log('cl', arg);
+    // socket = io('ws://localhost:7890');
+    const fn = (arg: any) => {
+      setMsg(arg.room);
+      setRoom(arg.room);
+    };
 
-      setMsg(arg);
-    });
+    socket.on('gamers', fn);
+    return () => {
+      socket.off('gamers', fn);
+    };
   }, []);
+
+  console.log('room id:', room);
+
   return (
     <div>
       <div>sockets</div>
@@ -21,6 +32,7 @@ export default function Home() {
           e.preventDefault();
 
           socket.emit('msg', 'from next');
+          if (room !== 'loading') socket.emit('room', room);
         }}
       >
         btn
