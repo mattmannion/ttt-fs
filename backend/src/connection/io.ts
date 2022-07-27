@@ -1,4 +1,4 @@
-import { cfg } from 'src/util/env';
+// import { cfg } from 'src/util/env';
 import { app } from 'src/server';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -8,7 +8,7 @@ export const server = createServer(app);
 
 export const io = new Server(server, {
   cors: {
-    origin: <string[]>cfg.cors.whitelist,
+    origin: <string[]>['http://localhost:3000'],
     credentials: true,
   },
 });
