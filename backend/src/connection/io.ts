@@ -8,7 +8,7 @@ export const server = createServer(app);
 
 export const io = new Server(server, {
   cors: {
-    origin: <string[]>[...cfg.cors.whitelist],
+    origin: <string[]>cfg.cors.whitelist,
     credentials: true,
   },
 });
