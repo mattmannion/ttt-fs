@@ -17,9 +17,6 @@ const s = io('ws://localhost:7890');
 
 export default function Home() {
   useEffect(() => {
-    s.emit('join');
-    // s.emit('gamers');
-
     return () => {
       s.off('join');
       s.off('leave');
@@ -31,17 +28,32 @@ export default function Home() {
       <div>sockets</div>
       <br />
 
+      {/* form start */}
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          await axios.post(location + '/login', {
+            username: 'mm',
+            password: 'mm',
+          });
+        }}
+      >
+        <button type='submit'>login mm</button>
+      </form>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          await axios.post(location + '/login', {
+            username: 'mgr',
+            password: 'mgr',
+          });
+        }}
+      >
+        <button type='submit'>login mgr</button>
+      </form>
+      {/* form end */}
+
       <div style={styles}>
-        <button
-          onClick={async () => {
-            await axios.post(location + '/login', {
-              username: 'mgr',
-              password: 'mgr',
-            });
-          }}
-        >
-          login
-        </button>
         <button
           onClick={async () => {
             try {
@@ -77,7 +89,7 @@ export default function Home() {
             try {
               const { data } = await axios.get(location + '/profile');
 
-              s.emit('join', data);
+              if (data) s.emit('join', data);
             } catch (error) {
               console.log('no user');
             }
@@ -88,24 +100,34 @@ export default function Home() {
 
         {/* LEAVE */}
         <button
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
 
-            s.emit('leave');
+            try {
+              const { data } = await axios.get(location + '/profile');
+
+              if (data) s.emit('leave', data);
+            } catch (error) {
+              console.log('no user');
+            }
           }}
         >
           leave
         </button>
-
-        {/* GAMERS */}
         <button
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
 
-            s.emit('gamers');
+            try {
+              const { data } = await axios.get(location + '/profile');
+
+              if (data) s.emit('clients', data);
+            } catch (error) {
+              console.log('no user');
+            }
           }}
         >
-          gamers
+          get clients
         </button>
       </div>
     </div>

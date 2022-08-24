@@ -12,8 +12,8 @@ services:
     container_name: postgres-ttt
     image: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: ps
+      POSTGRES_PASSWORD: ps
       POSTGRES_DB: ttt
     volumes:
       - ./pgdata:/var/lib/data

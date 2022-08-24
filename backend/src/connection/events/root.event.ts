@@ -1,34 +1,7 @@
-import { SessionData } from 'express-session';
-import { store } from 'src/api/middleware/redis.session';
+// import type { SessionData } from 'express-session';
 import { io, ws } from 'src/connection/io';
+import { ClientSession, SetSess, UseSess } from 'src/util/util';
 import { v4 } from 'uuid';
-
-interface State {
-  room_id: string;
-}
-
-let state: State = {
-  room_id: '',
-};
-
-function SetSession(
-  data: ClientSession,
-  fn: (session: SessionData) => void
-): void {
-  if (data && data.session && data.session.sid) {
-    const { sid } = data.session;
-    store.get(sid, (_, session) => {
-      if (session && session.sid) {
-        fn(session);
-        store.set(sid, session);
-      }
-    });
-  }
-}
-
-interface ClientSession {
-  session: SessionData | undefined;
-}
 
 io.on(ws.on.connect, (s) => {
   console.log(s.rooms);
@@ -36,39 +9,42 @@ io.on(ws.on.connect, (s) => {
   s.on(ws.socket.on.join, async (cs: ClientSession) => {
     console.log('pong');
 
-    SetSession(cs, (session) => {
-      session.gamers = 'gamers';
-      session.thing = 'another';
+    SetSess(cs, (session) => {
+      if (session.match && s.rooms.has(session.match)) {
+        console.log('user already joined:', session.match);
+        console.log(s.rooms);
+      } else {
+        session.match = v4();
+
+        s.join(session.match);
+        console.log(session.match + ' joined');
+        console.log(s.rooms);
+      }
     });
-
-    // attach to new users
-    // s.join(v4());
-
-    // console.log(s.request);
   });
 
   // delete
-  s.on(ws.socket.on.leave, () => {
-    if (s.rooms.has(state.room_id)) {
-      s.leave(state.room_id);
+  s.on(ws.socket.on.leave, (cs: ClientSession) => {
+    SetSess(cs, (session) => {
+      if (session && session.match) {
+        s.leave(session.match);
+        session.match = undefined;
 
-      console.log('user left the room');
-      console.log(s.rooms);
-    } else {
-      console.log('no room');
-    }
+        console.log('user left the room');
+        console.log(s.rooms);
+      } else {
+        console.log('no room');
+        console.log(s.rooms);
+      }
+    });
   });
 
-  // create
-  s.on(ws.socket.on.gamers, () => {
-    state.room_id = v4();
-
-    s.join(state.room_id);
-    s.rooms.has(state.room_id);
-    console.log(s.rooms, 'room created');
-  });
-
-  s.on(ws.on.disconnect, () => {
-    console.log('disconnected');
+  s.on('clients', (cs: ClientSession) => {
+    UseSess(cs, async (session) => {
+      if (session && session.match) {
+        const clients = await io.in(session.match).allSockets();
+        console.log('clients', clients);
+      }
+    });
   });
 });
