@@ -32,10 +32,14 @@ export const ws: {
     on: {
       gamers: 'gamers';
       msg: 'msg';
+      join: 'join';
+      leave: 'leave';
     };
     emit: {
       gamers: 'gamers';
       msg: 'msg';
+      join: 'join';
+      leave: 'leave';
     };
   };
 } = {
@@ -47,10 +51,14 @@ export const ws: {
     on: {
       gamers: 'gamers',
       msg: 'msg',
+      join: 'join',
+      leave: 'leave',
     },
     emit: {
       gamers: 'gamers',
       msg: 'msg',
+      join: 'join',
+      leave: 'leave',
     },
   },
 };

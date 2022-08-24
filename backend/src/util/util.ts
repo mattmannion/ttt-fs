@@ -1,5 +1,7 @@
+import type { SessionData } from 'express-session';
 import glob from 'glob';
 import SQL from 'sql-template-strings';
+import { store } from 'src/db/redis';
 import { cfg } from 'src/util/env';
 
 /** allows for correct casing to work with vscode plugin */
@@ -61,4 +63,35 @@ export function InternalError(error: unknown) {
 export function time_stamp(): string {
   const d = new Date();
   return `>> ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+}
+
+export interface ClientSession {
+  session: SessionData | undefined;
+}
+
+export function SetSess(
+  data: ClientSession,
+  fn: (session: SessionData) => void
+): void {
+  if (data && data.session && data.session.sid) {
+    const { sid } = data.session;
+    store.get(sid, (_, session) => {
+      if (session && session.sid) {
+        fn(session);
+        store.set(sid, session);
+      }
+    });
+  }
+}
+
+export function UseSess(
+  data: ClientSession,
+  fn: (session: SessionData) => void
+): void {
+  if (data && data.session && data.session.sid) {
+    const { sid } = data.session;
+    store.get(sid, (_, session) => {
+      if (session) fn(session);
+    });
+  }
 }

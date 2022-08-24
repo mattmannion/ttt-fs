@@ -2,7 +2,7 @@ process.env.NODE_ENV = 'prod';
 import { cfg, prod } from 'src/util/env';
 import { Router } from 'express';
 import { GlobImport, InternalError, sleep, time_stamp } from 'src/util/util';
-import users_router from 'src/routes/routers/users.router';
+import users_router from 'src/api/routes/routers/users.router';
 
 (async () => sleep(cfg.jest.sleep))();
 

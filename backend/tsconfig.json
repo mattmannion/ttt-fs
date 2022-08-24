@@ -21,6 +21,6 @@
       "src/*": ["src/*"]
     }
   },
-  "include": ["src", "types", "src/controllers/authentication/.test.ts"],
+  "include": ["src", "types", "src/api/controllers/authentication/.test.ts"],
   "exclude": ["node_modules"]
 }

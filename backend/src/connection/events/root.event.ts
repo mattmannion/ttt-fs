@@ -1,40 +1,50 @@
+// import type { SessionData } from 'express-session';
 import { io, ws } from 'src/connection/io';
+import { ClientSession, SetSess, UseSess } from 'src/util/util';
 import { v4 } from 'uuid';
 
-let state = {
-  msg: 'msg',
-  gamers: 'gamers',
-  counter: 0,
-  room: '',
-};
-
 io.on(ws.on.connect, (s) => {
-  console.log('connection');
+  console.log(s.rooms);
 
-  state.room = v4();
+  s.on(ws.socket.on.join, async (cs: ClientSession) => {
+    console.log('pong');
 
-  s.on(ws.socket.on.gamers, () => {
-    io.emit(ws.socket.emit.gamers, { msg: 'gamers', room: state.room });
+    SetSess(cs, (session) => {
+      if (session.match && s.rooms.has(session.match)) {
+        console.log('user already joined:', session.match);
+        console.log(s.rooms);
+      } else {
+        session.match = v4();
+
+        s.join(session.match);
+        console.log(session.match + ' joined');
+        console.log(s.rooms);
+      }
+    });
   });
 
-  // s.on(ws.socket.on.msg, (msg: string) => {
-  //   state.msg = msg;
+  // delete
+  s.on(ws.socket.on.leave, (cs: ClientSession) => {
+    SetSess(cs, (session) => {
+      if (session && session.match) {
+        s.leave(session.match);
+        session.match = undefined;
 
-  //   io.emit(ws.socket.emit.msg, {
-  //     msg: state.msg + ' ' + state.counter++,
-  //     room: state.room,
-  //   });
-  // });
-
-  s.on('room', (room) => {
-    s.join(room);
-    console.log('2nd thread', s.rooms.has(state.room));
+        console.log('user left the room');
+        console.log(s.rooms);
+      } else {
+        console.log('no room');
+        console.log(s.rooms);
+      }
+    });
   });
 
-  s.on(ws.on.disconnect, () => {
-    console.log('connection lost');
+  s.on('clients', (cs: ClientSession) => {
+    UseSess(cs, async (session) => {
+      if (session && session.match) {
+        const clients = await io.in(session.match).allSockets();
+        console.log('clients', clients);
+      }
+    });
   });
 });
-
-// io.sockets.on('connection', (s) => {
-// });
