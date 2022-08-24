@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import express, { json } from 'express';
-import { mw_cors } from 'src/middleware/cors';
-import { express_session } from 'src/middleware/redis.session';
-import { router } from 'src/routes/router';
+import { mw_cors } from 'src/api/middleware/cors';
+import { express_session } from 'src/api/middleware/redis.session';
+import { router } from 'src/api/routes/router';
 import { env_test, prod } from 'src/util/env';
 import { redis } from 'src/db/redis';
-import { ep_log } from 'src/middleware/logger';
+import { ep_log } from 'src/api/middleware/logger';
 
 // this file will only be used for main server
 // configuration, including initial middleware.

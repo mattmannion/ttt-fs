@@ -1,6 +1,6 @@
 process.env.NODE_ENV = 'test';
 import { req, resp } from 'src/__mocks__/express.mock';
-import { Logout } from 'src/controllers/login/delete.login';
+import { Logout } from 'src/api/controllers/login/delete.login';
 import { app } from 'src/server';
 import supertest from 'supertest';
 import { sleep } from 'src/util/util';

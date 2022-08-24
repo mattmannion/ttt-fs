@@ -39,10 +39,11 @@ export async function PostLogin({ body, session }: Request, res: Response) {
   }
 
   session.username = user.username;
+  // session.sid = 'sess:' + session.id;
+  session.sid = session.id;
 
   res.status(200).json({
     username,
-    password,
     message: 'you have logged in',
     status: 'success',
   });

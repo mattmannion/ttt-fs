@@ -1,5 +1,5 @@
-import { check_auth } from 'src/middleware/auth/check_auth';
-import { ep_log } from 'src/middleware/logger';
+import { check_auth } from 'src/api/middleware/auth/check_auth';
+import { ep_log } from 'src/api/middleware/logger';
 import { app } from 'src/server';
 import { cfg } from 'src/util/env';
 import { sleep } from 'src/util/util';

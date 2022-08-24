@@ -3,10 +3,12 @@ import session from 'express-session';
 import { client } from 'src/db/redis';
 import { cfg, prod } from 'src/util/env';
 
-const RedisStore = connectRedis(session);
+export const RedisStore = connectRedis(session);
+
+export const store = new RedisStore({ client });
 
 export const express_session = session({
-  store: new RedisStore({ client }),
+  store,
   cookie: {
     secure: prod,
     httpOnly: prod,

@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 
-export const req = <Request>{
+export const req = <Request>(<unknown>{
   method: 'TEST',
   path: '/test-route',
   session: {
@@ -12,7 +12,7 @@ export const req = <Request>{
       expires: undefined,
     },
   },
-};
+});
 
 export const resp = () => {
   const res = <Response>{};
