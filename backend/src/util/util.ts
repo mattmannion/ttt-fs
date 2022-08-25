@@ -1,7 +1,7 @@
 import type { SessionData } from 'express-session';
 import glob from 'glob';
 import SQL from 'sql-template-strings';
-import { store } from 'src/db/redis';
+import { session_store } from 'src/db/redis';
 import { cfg } from 'src/util/env';
 
 /** allows for correct casing to work with vscode plugin */
@@ -75,10 +75,10 @@ export function SetSess(
 ): void {
   if (data && data.session && data.session.sid) {
     const { sid } = data.session;
-    store.get(sid, (_, session) => {
+    session_store.get(sid, (_, session) => {
       if (session && session.sid) {
         fn(session);
-        store.set(sid, session);
+        session_store.set(sid, session);
       }
     });
   }
@@ -90,7 +90,7 @@ export function UseSess(
 ): void {
   if (data && data.session && data.session.sid) {
     const { sid } = data.session;
-    store.get(sid, (_, session) => {
+    session_store.get(sid, (_, session) => {
       if (session) fn(session);
     });
   }

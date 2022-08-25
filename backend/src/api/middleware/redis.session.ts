@@ -1,12 +1,12 @@
 import connectRedis from 'connect-redis';
 import session from 'express-session';
-import { store } from 'src/db/redis';
+import { client } from 'src/db/redis';
 import { cfg, prod } from 'src/util/env';
 
-export const RedisStore = connectRedis(session);
+const RedisStore = connectRedis(session);
 
 export const express_session = session({
-  store,
+  store: new RedisStore({ client }),
   cookie: {
     secure: prod,
     httpOnly: prod,
