@@ -66,7 +66,7 @@ export function time_stamp(): string {
 }
 
 export interface ClientSession {
-  session: SessionData | undefined;
+  session: SessionData;
 }
 
 export function SetSess(

@@ -34,6 +34,7 @@ export const ws: {
       msg: 'msg';
       join: 'join';
       leave: 'leave';
+      matchmaking: 'matchmaking';
     };
     emit: {
       gamers: 'gamers';
@@ -53,6 +54,7 @@ export const ws: {
       msg: 'msg',
       join: 'join',
       leave: 'leave',
+      matchmaking: 'matchmaking',
     },
     emit: {
       gamers: 'gamers',

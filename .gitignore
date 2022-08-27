@@ -9,5 +9,6 @@ frontend/yarn-error.log
 node_modules
 
 pgdata
+redisdata
 
 yarn.lock

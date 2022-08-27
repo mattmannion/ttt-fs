@@ -57,7 +57,12 @@ export default function Home() {
         <button
           onClick={async () => {
             try {
-              await axios.delete(location + '/login');
+              const { data } = await axios.get(location + '/profile');
+
+              if (data) {
+                s.emit('leave', data);
+                await axios.delete(location + '/login');
+              }
             } catch (error) {
               console.log('no user');
             }
@@ -82,20 +87,36 @@ export default function Home() {
       <br />
 
       <div style={styles}>
-        {/* JOIN */}
+        {/* Matchmaking */}
         <button
           onClick={async (e) => {
             e.preventDefault();
             try {
-              const { data } = await axios.get(location + '/profile');
+              const { data: cs } = await axios.get(location + '/profile');
 
-              if (data) s.emit('join', data);
+              if (cs) s.emit('matchmaking', cs);
             } catch (error) {
               console.log('no user');
             }
           }}
         >
-          join
+          find match
+        </button>
+
+        <button
+          onClick={async (e) => {
+            e.preventDefault();
+
+            try {
+              const { data } = await axios.get(location + '/profile');
+
+              if (data) s.emit('clients', data);
+            } catch (error) {
+              console.log('no user');
+            }
+          }}
+        >
+          get clients
         </button>
 
         {/* LEAVE */}
@@ -112,8 +133,10 @@ export default function Home() {
             }
           }}
         >
-          leave
+          leave waiting room
         </button>
+
+        {/* LEAVE Game */}
         <button
           onClick={async (e) => {
             e.preventDefault();
@@ -121,13 +144,13 @@ export default function Home() {
             try {
               const { data } = await axios.get(location + '/profile');
 
-              if (data) s.emit('clients', data);
+              if (data) s.emit('leave_game', data);
             } catch (error) {
               console.log('no user');
             }
           }}
         >
-          get clients
+          leave game
         </button>
       </div>
     </div>
