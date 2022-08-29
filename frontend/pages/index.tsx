@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { CSSProperties, useEffect } from 'react';
 import { io } from 'socket.io-client';
+import { Game } from '/components/game/Game';
 
 const location = 'http://localhost:7890';
 
@@ -13,15 +14,15 @@ const styles: CSSProperties | undefined = {
   alignItems: 'center',
 };
 
-const s = io('ws://localhost:7890');
+const socket = io('ws://localhost:7890');
 
 export default function Home() {
   useEffect(() => {
     return () => {
-      s.off('join');
-      s.off('leave');
+      socket.off('join');
+      socket.off('leave');
     };
-  }, [s]);
+  }, [socket]);
 
   return (
     <div style={styles}>
@@ -60,7 +61,7 @@ export default function Home() {
               const { data } = await axios.get(location + '/profile');
 
               if (data) {
-                s.emit('leave', data);
+                socket.emit('leave', data);
                 await axios.delete(location + '/login');
               }
             } catch (error) {
@@ -94,7 +95,7 @@ export default function Home() {
             try {
               const { data: cs } = await axios.get(location + '/profile');
 
-              if (cs) s.emit('matchmaking', cs);
+              if (cs) socket.emit('matchmaking', cs);
             } catch (error) {
               console.log('no user');
             }
@@ -110,7 +111,7 @@ export default function Home() {
             try {
               const { data } = await axios.get(location + '/profile');
 
-              if (data) s.emit('clients', data);
+              if (data) socket.emit('clients', data);
             } catch (error) {
               console.log('no user');
             }
@@ -127,7 +128,7 @@ export default function Home() {
             try {
               const { data } = await axios.get(location + '/profile');
 
-              if (data) s.emit('leave', data);
+              if (data) socket.emit('leave', data);
             } catch (error) {
               console.log('no user');
             }
@@ -144,7 +145,7 @@ export default function Home() {
             try {
               const { data } = await axios.get(location + '/profile');
 
-              if (data) s.emit('leave_game', data);
+              if (data) socket.emit('leave_game', data);
             } catch (error) {
               console.log('no user');
             }
@@ -153,6 +154,7 @@ export default function Home() {
           leave game
         </button>
       </div>
+      <Game socket={socket} />
     </div>
   );
 }

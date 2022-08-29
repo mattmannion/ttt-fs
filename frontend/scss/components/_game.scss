@@ -1,0 +1,83 @@
+.game {
+  // local vars
+  $cs: 10rem;
+  $cb: solid white 2px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+
+  margin-top: 5rem;
+
+  & > button {
+    margin-bottom: 5rem;
+  }
+
+  &__ticker {
+    margin-bottom: 5rem;
+  }
+
+  &__board {
+    display: grid;
+    grid-template-columns: repeat(3, $cs);
+    grid-template-rows: repeat(3, $cs);
+
+    user-select: none;
+  }
+
+  &__board-cell {
+    height: $cs;
+    width: $cs;
+
+    font-size: 10rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: background-color 333ms;
+
+    &:hover {
+      background-color: rgba(white, 0.2);
+    }
+
+    &:active {
+      background-color: rgba(white, 0.3);
+    }
+
+    // cell numbers
+    &:nth-child(1) {
+      border-bottom: $cb;
+    }
+    &:nth-child(2) {
+      border-bottom: $cb;
+      border-left: $cb;
+    }
+    &:nth-child(3) {
+      border-bottom: $cb;
+      border-left: $cb;
+    }
+    &:nth-child(4) {
+      border-bottom: $cb;
+    }
+    &:nth-child(5) {
+      border-bottom: $cb;
+      border-left: $cb;
+    }
+    &:nth-child(6) {
+      border-bottom: $cb;
+      border-left: $cb;
+    }
+    &:nth-child(7) {
+    }
+    &:nth-child(8) {
+      border-left: $cb;
+    }
+    &:nth-child(9) {
+      border-left: $cb;
+    }
+  }
+}

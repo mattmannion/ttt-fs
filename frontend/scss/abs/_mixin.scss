@@ -1,0 +1,69 @@
+@mixin centerFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin betweenFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin fixedCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin centerGrid {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+@mixin verticalPageMargin {
+  margin-top: 15rem;
+  margin-bottom: 5rem;
+}
+
+//////////////////////////////
+/// background positioning ///
+//////////////////////////////
+
+@mixin centerBG($url) {
+  background-size: cover;
+  background-repeat: none;
+  background-position: center;
+}
+
+@mixin darkCenterBG($url) {
+  $bg-opacity: 0.8;
+  background: linear-gradient(
+      0deg,
+      rgba($black, $bg-opacity),
+      rgba($black, $bg-opacity)
+    ),
+    url($url);
+  background-size: cover;
+  background-repeat: none;
+  background-position: center;
+}
+
+@mixin fixedBG {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+@mixin SixteenByNine($size) {
+  width: $size * 16;
+  height: $size * 9;
+}
+
+@mixin Square($size) {
+  width: $size;
+  height: $size;
+}

@@ -1,0 +1,65 @@
+// @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html {
+  // this makes 1rem = 10px
+  // derived from 10px/16 px
+  // useful for responsive layouts
+  font-size: 62.5%;
+
+  // replace these with your choice
+  font-family: 'Poppins', Helvetica, Arial, sans-serif;
+
+  // max - width
+  @include respond(phone-s) {
+    font-size: 20%;
+  }
+
+  @include respond(phone-m) {
+    font-size: 15%;
+  }
+
+  @include respond(phone-xs) {
+    font-size: 10%;
+  }
+
+  // min - width
+  @include respond(phone-m-min) {
+    font-size: 20%;
+  }
+
+  @include respond(phone-l) {
+    font-size: 25%;
+  }
+
+  @include respond(tab) {
+    font-size: 30%;
+  }
+
+  @include respond(fourthree) {
+    font-size: 45%;
+  }
+
+  @include respond(desktop-s) {
+    font-size: 55%;
+  }
+
+  @include respond(desktop) {
+    font-size: 62.5%;
+  }
+
+  @include respond(twoK) {
+    font-size: 100%;
+  }
+
+  @include respond(fourK) {
+    font-size: 140%;
+  }
+}
+
+body {
+  font-size: 3rem;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: 1rem;
+}

@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import 'module-alias/register';
 import { TypeOrmPGInit } from 'src/db/to';
-import { server } from 'src/connection/io';
+import { server } from 'src/socket/io';
 import { cfg } from 'src/util/env';
 
 console.log('live');
