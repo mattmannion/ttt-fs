@@ -1,7 +1,9 @@
 import type { Server, Socket } from 'socket.io';
 
 export function GameThread(io: Server, socket: Socket) {
-  socket.on('clear_cells', () => io.emit('clear_cells', ''));
+  socket.on('reset_game', () => io.emit('reset_game', ''));
+
+  socket.on('ticker', (arg) => io.emit('ticker', arg));
 
   socket.on('cell_1', (arg) => io.emit('cell_1', arg));
   socket.on('cell_2', (arg) => io.emit('cell_2', arg));
