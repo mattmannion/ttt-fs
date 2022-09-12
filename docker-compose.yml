@@ -12,3 +12,13 @@ services:
     restart: on-failure
     ports:
       - '5432:5432'
+
+  redis:
+    container_name: redis-ttt
+    image: redis:alpine
+    entrypoint: redis-server --save 20 1
+    volumes:
+      - ./redisdata:/etc/redis/dump.rdb
+    restart: on-failure
+    ports:
+      - '6379:6379'
