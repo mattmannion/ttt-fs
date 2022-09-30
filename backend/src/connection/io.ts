@@ -3,6 +3,8 @@ import { app } from 'src/server';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { GlobImport } from 'src/util/util';
+import { SessionData } from 'express-session';
+import { rds } from 'src/api/middleware/redis.session';
 
 export const server = createServer(app);
 
@@ -62,3 +64,34 @@ export const ws: {
     },
   },
 };
+
+export interface ClientSession {
+  session: SessionData | undefined;
+}
+
+export function SetSess(
+  data: ClientSession,
+  fn: (session: SessionData) => void
+): void {
+  if (data && data.session && data.session.sid) {
+    const { sid } = data.session;
+    rds.get(sid, (_, session) => {
+      if (session && session.sid) {
+        fn(session);
+        rds.set(sid, session);
+      }
+    });
+  }
+}
+
+export function UseSess(
+  data: ClientSession,
+  fn: (session: SessionData) => void
+): void {
+  if (data && data.session && data.session.sid) {
+    const { sid } = data.session;
+    rds.get(sid, (_, session) => {
+      if (session) fn(session);
+    });
+  }
+}

@@ -36,7 +36,7 @@ describe('Utility Test Suite', () => {
 
     it('must conain a router', async () => {
       router = await GlobImport<Router>({
-        path: '/routes/routers',
+        path: '/api/routes/routers',
         file_ext: '.router.*',
       });
 
@@ -45,7 +45,7 @@ describe('Utility Test Suite', () => {
 
     it('must return an array', async () => {
       router = await GlobImport<Router>({
-        path: '/routes/routers',
+        path: '/api/routes/routers',
         file_ext: '.router.*',
       });
 
@@ -54,7 +54,7 @@ describe('Utility Test Suite', () => {
 
     it('tests file_ext as undefined', async () => {
       router = await GlobImport<Router>({
-        path: '/routes/routers',
+        path: '/api/routes/routers',
       });
 
       expect(router).toBeInstanceOf(Array);

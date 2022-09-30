@@ -1,6 +1,5 @@
 // import type { SessionData } from 'express-session';
-import { io, ws } from 'src/connection/io';
-import { ClientSession, SetSess, UseSess } from 'src/util/util';
+import { ClientSession, io, SetSess, UseSess, ws } from 'src/connection/io';
 import { v4 } from 'uuid';
 
 io.on(ws.on.connect, (s) => {
